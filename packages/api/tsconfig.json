@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": false,
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "paths": {
+      "src": ["src"]
+    }
+  },
+  "include": ["src/**/*.ts", "./global.d.ts"],
+  "exclude": ["**/node_modules", "packages/api/dist"]
+}

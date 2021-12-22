@@ -1,0 +1,38 @@
+# dependencies #
+node_modules/
+**/node_modules/
+
+# executables and compiled sources #
+**/*.exe
+**/build/
+**/tmp/
+**/dist/
+**/dist_electron/
+!packages/ac-server/public
+
+# environnement configuration
+**/.env
+**/.env.production
+
+# logs #
+**/*.log
+
+# OS generated files #
+.DS_Store
+
+# IDE Specific
+nbproject
+.~lock.*
+.buildpath
+.idea
+.project
+.settings
+.vscode
+composer.lock
+*.sublime-workspace
+*.swp
+*.swoorkspace
+.vscode/*
+
+# Coverage directory used by tools like istanbul
+**/coverage

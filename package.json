@@ -1,0 +1,20 @@
+{
+  "name": "root",
+  "private": true,
+  "scripts": {
+    "dev:api": "yarn workspace @gp/api run dev",
+    "dev:shared": "yarn workspace @gp/shared run dev"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/electron",
+      "**/electron/**"
+    ]
+  },
+  "devDependencies": {
+    "yarn-run-all": "^3.1.1"
+  }
+}
