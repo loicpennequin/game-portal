@@ -4,10 +4,21 @@ import {
   userRoles,
   IUser,
   Email,
+  DateString,
+  PASSWORD_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
 } from '@gp/shared';
-import { Length, IsString, IsEmail, IsNotEmpty, IsEnum } from 'class-validator';
+import {
+  Length,
+  IsString,
+  IsEmail,
+  IsNotEmpty,
+  IsEnum,
+  IsOptional,
+} from 'class-validator';
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -26,7 +37,7 @@ export class User extends BaseEntity implements IUser {
   passwordHash: string;
 
   @Column({ type: 'timestamp' })
-  tosAcceptedAt: Date;
+  tosAcceptedAt: DateString;
 
   @Column({
     type: 'enum',
@@ -36,4 +47,21 @@ export class User extends BaseEntity implements IUser {
   })
   @IsEnum(userRoles, { each: true })
   roles: userRoles[];
+
+  @Column({ type: 'varchar', nullable: false })
+  hashedPassword: string;
+
+  @Length(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)
+  @IsOptional()
+  password?: string;
+
+  @BeforeInsert()
+  async hashPassword() {
+    const saltOrRounds = 12;
+    this.hashedPassword = await bcrypt.hash(this.password, saltOrRounds);
+  }
+
+  validatePassword(password: string): Promise<boolean> {
+    return bcrypt.compare(password, this.password);
+  }
 }

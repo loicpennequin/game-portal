@@ -5,12 +5,14 @@ const defaults = {
   input: 'src/index.ts'
 };
 
+console.log(process.env.ROLLUP_WATCH);
 export default [
   {
     ...defaults,
     output: {
       dir: 'dist/cjs',
-      format: 'cjs'
+      format: 'cjs',
+      sourcemap: true
     },
     plugins: [
       typescript({
@@ -24,7 +26,8 @@ export default [
     ...defaults,
     output: {
       dir: 'dist/esm',
-      format: 'es'
+      format: 'es',
+      sourcemap: true
     },
     plugins: [
       typescript({

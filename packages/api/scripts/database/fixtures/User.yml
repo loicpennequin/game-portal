@@ -1,7 +1,7 @@
 entity: User
-processor: ../processor/user-processor
 items:
   user{1..100}:
     username: 'User($current)'
     email: '{{internet.email}}'
     tosAcceptedAt: '{{date.past(1)}}'
+    password: 'azerty'

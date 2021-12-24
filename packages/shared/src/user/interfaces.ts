@@ -1,11 +1,11 @@
 import { userRoles } from '../enums';
 import { IEntity } from '../interfaces';
-import { Email, Maybe } from '../types';
+import { DateString, Email, Maybe } from '../types';
 
 export interface IUser extends IEntity {
   username: string;
   email: Maybe<Email>;
-  tosAcceptedAt: Date;
+  tosAcceptedAt: DateString;
   roles: userRoles[];
 }
 
@@ -14,8 +14,8 @@ export interface ICreateUser {
   email: Email;
   password: string;
   passwordConfirm: string;
-  tosAcceptedAt: Date;
+  tosAcceptedAt: DateString;
 }
 
 export type IUpdateUser = Partial<Omit<IUser, 'tosAcceptedAt'>> &
-  Pick<ICreateUser, 'password' | 'passwordConfirm'>;
+  Partial<Pick<ICreateUser, 'password' | 'passwordConfirm'>>;

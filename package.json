@@ -2,8 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "dev:api": "yarn workspace @gp/api run dev",
-    "dev:shared": "yarn workspace @gp/shared run dev"
+    "api": "yarn workspace @gp/api",
+    "shared": "yarn workspace @gp/shared"
   },
   "workspaces": {
     "packages": [

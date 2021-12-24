@@ -7,7 +7,7 @@ import {
   BeforeUpdate,
 } from 'typeorm';
 import { Type } from 'class-transformer';
-import { UUID } from '@gp/shared';
+import { DateString, UUID } from '@gp/shared';
 import { validateOrReject } from 'class-validator';
 
 export abstract class BaseEntity extends TypeOrmBaseEntity {
@@ -15,12 +15,10 @@ export abstract class BaseEntity extends TypeOrmBaseEntity {
   id: UUID;
 
   @CreateDateColumn()
-  @Type(() => Date)
-  createdAt: Date;
+  createdAt: DateString;
 
   @UpdateDateColumn()
-  @Type(() => Date)
-  updatedAt: Date;
+  updatedAt: DateString;
 
   @BeforeInsert()
   @BeforeUpdate()
