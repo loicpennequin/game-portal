@@ -1,6 +1,6 @@
 export enum userRoles {
-  USER = 'role_user',
-  ADMIN = 'role_admin'
+  USER = 'USER',
+  ADMIN = 'ADMIN'
 }
 
 export enum friendRequestStatus {

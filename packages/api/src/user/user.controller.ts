@@ -6,15 +6,15 @@ import {
   Patch,
   Param,
   Delete,
-  ClassSerializerInterceptor,
   UseInterceptors,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
+import { SerializerInterceptor } from 'src/core/interceptors/serializer.interceptor';
 
 @Controller('users')
-@UseInterceptors(ClassSerializerInterceptor)
+@UseInterceptors(SerializerInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

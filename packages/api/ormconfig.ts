@@ -12,9 +12,8 @@ export default {
   database: process.env.DB_NAME,
   entities: ['src/**/*.entity.ts'],
   synchronize: false,
-  migrations: ['scripts/database/migrations/*{.ts,.js}'],
+  migrations: [],
   migrationsTableName: 'migrations_typeorm',
-  migrationsRun: true,
   cli: {
     migrationsDir: 'scripts/database/migrations',
   },

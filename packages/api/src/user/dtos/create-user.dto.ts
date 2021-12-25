@@ -1,5 +1,4 @@
 import {
-  DateString,
   Email,
   ICreateUser,
   PASSWORD_MAX_LENGTH,
@@ -7,7 +6,13 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
 } from '@gp/shared';
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateUserDto implements ICreateUser {
   @Length(USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH)
@@ -24,5 +29,6 @@ export class CreateUserDto implements ICreateUser {
   @Length(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)
   passwordConfirm: string;
 
-  tosAcceptedAt: DateString;
+  @IsBoolean()
+  hasAcceptedTos: boolean;
 }

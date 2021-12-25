@@ -7,6 +7,7 @@ export interface IUser extends IEntity {
   email: Maybe<Email>;
   tosAcceptedAt: DateString;
   roles: userRoles[];
+  isOnline: boolean;
 }
 
 export interface ICreateUser {
@@ -14,7 +15,7 @@ export interface ICreateUser {
   email: Email;
   password: string;
   passwordConfirm: string;
-  tosAcceptedAt: DateString;
+  hasAcceptedTos: boolean;
 }
 
 export type IUpdateUser = Partial<Omit<IUser, 'tosAcceptedAt'>> &

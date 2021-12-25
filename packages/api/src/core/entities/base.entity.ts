@@ -6,17 +6,20 @@ import {
   BeforeInsert,
   BeforeUpdate,
 } from 'typeorm';
-import { Type } from 'class-transformer';
 import { DateString, UUID } from '@gp/shared';
 import { validateOrReject } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export abstract class BaseEntity extends TypeOrmBaseEntity {
+  @Expose()
   @PrimaryGeneratedColumn('uuid')
   id: UUID;
 
+  @Expose()
   @CreateDateColumn()
   createdAt: DateString;
 
+  @Expose()
   @UpdateDateColumn()
   updatedAt: DateString;
 
@@ -25,4 +28,6 @@ export abstract class BaseEntity extends TypeOrmBaseEntity {
   async validate() {
     await validateOrReject(this, { skipMissingProperties: true });
   }
+
+  abstract isOwnedByCurrentUser(userId: UUID);
 }
