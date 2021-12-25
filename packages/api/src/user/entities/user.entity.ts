@@ -32,11 +32,11 @@ export class User extends BaseEntity implements IUser {
   username: string;
 
   @Expose({
-    groups: [serializationGroups.OWNED, serializationGroups.ADMIN],
+    groups: ['owned'],
   })
   @Column({ unique: true, type: 'varchar', nullable: false })
-  @IsEmail()
-  @IsNotEmpty()
+  // @IsEmail()
+  // @IsNotEmpty()
   email: Email;
 
   @Column({ type: 'varchar', nullable: false })
@@ -84,6 +84,6 @@ export class User extends BaseEntity implements IUser {
   }
 
   validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
+    return bcrypt.compare(password, this.hashedPassword);
   }
 }

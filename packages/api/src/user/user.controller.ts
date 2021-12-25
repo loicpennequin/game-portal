@@ -12,6 +12,17 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { SerializerInterceptor } from 'src/core/interceptors/serializer.interceptor';
+import { AccessControl } from 'src/auth/decorators/access-control.decorator';
+import { accessControlPolicies } from 'src/auth/auth.constants';
+import { classToPlain, Expose } from 'class-transformer';
+
+class MyClass {
+  @Expose()
+  foo: number;
+
+  @Expose({ groups: ['foo'] })
+  bar: number;
+}
 
 @Controller('users')
 @UseInterceptors(SerializerInterceptor)
@@ -34,6 +45,13 @@ export class UserController {
   }
 
   @Patch(':id')
+  @AccessControl({
+    roles: {
+      USER: accessControlPolicies.OWN,
+      ADMIN: accessControlPolicies.ANY,
+    },
+    isOwn: req => req.user.id === req.params.id,
+  })
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateById(id, updateUserDto);
   }

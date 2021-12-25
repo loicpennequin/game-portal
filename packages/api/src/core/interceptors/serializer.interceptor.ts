@@ -9,6 +9,7 @@ import { isFunction } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from 'src/user/entities/user.entity';
+import { serializationGroups } from '../core.constants';
 import { isObject } from '../utils/assertions';
 
 export class SerializerInterceptor extends ClassSerializerInterceptor {
@@ -33,19 +34,19 @@ export class SerializerInterceptor extends ClassSerializerInterceptor {
 
   serialize(
     response: ObjectLiteral | Array<ObjectLiteral>,
-    options: ClassTransformOptions & { user?: User },
+    { user, ...options }: ClassTransformOptions & { user?: User },
   ): ObjectLiteral | Array<ObjectLiteral> {
     if (!isObject(response)) {
       return response;
     }
-
     const getOptions = entity => {
       if (isFunction(entity.isOwnedByBurrentUser)) return options;
-      if (entity.isOwnedByCurrentUser(options.user)) return options;
 
       return {
         ...options,
-        groups: [...options.groups, 'owned'],
+        groups: entity.isOwnedByCurrentUser(user.id)
+          ? options.groups.concat(serializationGroups.OWNED)
+          : options.groups,
       };
     };
 

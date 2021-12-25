@@ -9,6 +9,7 @@ import { configModuleOptions } from './configs/configModule.options';
 import { CoreModule } from 'src/core/core.module';
 import { DatabaseModule } from 'src/database/database.module';
 import { UserModule } from 'src/user/user.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from 'src/user/user.module';
     DatabaseModule,
     CoreModule,
     UserModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

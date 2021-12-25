@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { Log } from 'src/core/decorators/log.decorator';
 import { User } from 'src/user/entities/user.entity';
 import { UserService } from 'src/user/user.service';
+import { UUID } from '@gp/shared';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -20,7 +21,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   @Log()
-  async validate(payload: { sub: string }): Promise<User> {
+  async validate(payload: { sub: UUID }): Promise<User> {
     return this.userService.findById(payload.sub);
   }
 }

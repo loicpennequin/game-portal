@@ -1,7 +1,7 @@
 entity: User
 items:
-  user{1..100}:
+  user{1..20}:
     username: 'User($current)'
-    email: '{{internet.email}}'
+    email: 'user($current)@gmail.com'
     tosAcceptedAt: '{{date.past(1)}}'
     password: 'azerty'
