@@ -3,7 +3,6 @@ import * as cookieParser from 'cookie-parser';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { SilentAuthGuard } from './auth/guards/silent-auth.guard';
 
@@ -16,7 +15,6 @@ async function bootstrap() {
     }),
   );
   app.use(cookieParser());
-  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalGuards(new SilentAuthGuard());
   app.enableCors({
     origin(origin, cb) {

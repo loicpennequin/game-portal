@@ -1,4 +1,4 @@
-import { userRoles } from '@gp/shared';
+import { Constructor, userRoles } from '@gp/shared';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import {
@@ -7,10 +7,11 @@ import {
 } from '../auth.constants';
 
 export type AccessControlMetadata = {
-  roles: {
+  roles?: {
     [k in userRoles]?: accessControlPolicies;
   };
-  isOwn: (req: any) => boolean | Promise<boolean>;
+  isOwn?: (req: any) => boolean | Promise<boolean>;
+  bodyDtoClass?: Constructor<any>;
 };
 
 @Injectable()
@@ -22,12 +23,12 @@ export class AccessControlGuard implements CanActivate {
 
     if (!req.user) return false;
 
-    const { roles, isOwn } = this.reflector.getAllAndOverride<
+    const { roles = {}, isOwn } = this.reflector.getAllAndOverride<
       AccessControlMetadata
     >(ACCESS_CONTROL_METADATA_KEY, [context.getHandler(), context.getClass()]);
 
-    const isOwnResource = await isOwn(req);
-    if (!isOwnResource && Object.keys(roles).length === 0) return false;
+    const isOwnResource = (await isOwn?.(req)) ?? false;
+    if (!isOwnResource && Object.keys(roles).length === 0) return true;
 
     const { user } = req;
 

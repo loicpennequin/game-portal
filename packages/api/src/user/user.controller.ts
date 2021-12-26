@@ -7,31 +7,27 @@ import {
   Param,
   Delete,
   UseInterceptors,
+  UsePipes,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-import { SerializerInterceptor } from 'src/core/interceptors/serializer.interceptor';
 import { AccessControl } from 'src/auth/decorators/access-control.decorator';
 import { accessControlPolicies } from 'src/auth/auth.constants';
-import { classToPlain, Expose } from 'class-transformer';
-
-class MyClass {
-  @Expose()
-  foo: number;
-
-  @Expose({ groups: ['foo'] })
-  bar: number;
-}
+import { BaseController } from 'src/core/controllers/base.controller';
 
 @Controller('users')
-@UseInterceptors(SerializerInterceptor)
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UserController extends BaseController {
+  constructor(private readonly userService: UserService) {
+    super();
+  }
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @AccessControl({
+    bodyDtoClass: CreateUserDto,
+  })
+  create(@Body() dto: CreateUserDto) {
+    return this.userService.create(dto);
   }
 
   @Get()
@@ -51,9 +47,11 @@ export class UserController {
       ADMIN: accessControlPolicies.ANY,
     },
     isOwn: req => req.user.id === req.params.id,
+    bodyDtoClass: UpdateUserDto,
   })
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.updateById(id, updateUserDto);
+  update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    console.log('dto', dto);
+    return this.userService.updateById(id, dto);
   }
 
   @Delete(':id')

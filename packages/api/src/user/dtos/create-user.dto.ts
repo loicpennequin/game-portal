@@ -6,13 +6,7 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
 } from '@gp/shared';
-import {
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  Length,
-} from 'class-validator';
+import { IsBoolean, IsEmail, IsString, Length } from 'class-validator';
 
 export class CreateUserDto implements ICreateUser {
   @Length(USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH)
@@ -20,7 +14,6 @@ export class CreateUserDto implements ICreateUser {
   username: string;
 
   @IsEmail()
-  @IsNotEmpty()
   email: Email;
 
   @Length(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)

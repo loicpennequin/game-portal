@@ -7,15 +7,15 @@ import {
   DateString,
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
-  UUID,
+  UUID
 } from '@gp/shared';
 import {
   Length,
   IsString,
-  IsEmail,
-  IsNotEmpty,
   IsEnum,
   IsOptional,
+  IsEmail,
+  IsNotEmpty
 } from 'class-validator';
 import { BaseEntity } from 'src/core/entities/base.entity';
 import { BeforeInsert, Column, Entity } from 'typeorm';
@@ -32,18 +32,18 @@ export class User extends BaseEntity implements IUser {
   username: string;
 
   @Expose({
-    groups: ['owned'],
+    groups: [serializationGroups.OWNED]
   })
   @Column({ unique: true, type: 'varchar', nullable: false })
-  // @IsEmail()
-  // @IsNotEmpty()
+  @IsEmail()
+  @IsNotEmpty()
   email: Email;
 
   @Column({ type: 'varchar', nullable: false })
   hashedPassword: string;
 
   @Expose({
-    groups: [serializationGroups.OWNED, serializationGroups.ADMIN],
+    groups: [serializationGroups.OWNED, serializationGroups.ADMIN]
   })
   @Column({ type: 'timestamp' })
   tosAcceptedAt: DateString;
@@ -53,13 +53,13 @@ export class User extends BaseEntity implements IUser {
   isOnline: boolean;
 
   @Expose({
-    groups: [serializationGroups.OWNED, serializationGroups.ADMIN],
+    groups: [serializationGroups.OWNED, serializationGroups.ADMIN]
   })
   @Column({
     type: 'enum',
     enum: userRoles,
     default: [userRoles.USER],
-    array: true,
+    array: true
   })
   @IsEnum(userRoles, { each: true })
   roles: userRoles[];
