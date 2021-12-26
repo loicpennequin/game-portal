@@ -13,19 +13,18 @@ export const configModuleOptions: ConfigModuleOptions = {
         type: process.env.DB_TYPE,
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
+        database: process.env.DB_NAME
       },
 
       jwt: {
         accessToken: {
           secret: process.env.JWT_ACCESS_TOKEN_SECRET,
-          expiresIn:
-            process.env.NODE_ENV === 'development' ? 60 * 60 * 48 : 60 * 60 * 2,
+          expiresIn: process.env.NODE_ENV === 'development' ? 60 * 60 * 24 : 60 * 15
         },
         refreshToken: {
           secret: process.env.JWT_REFRESH_TOKEN_SECRET,
-          expiresIn: 60 * 60 * 24 * 7,
-        },
+          expiresIn: 60 * 60 * 24 * 7
+        }
       },
 
       cookie: {
@@ -33,8 +32,8 @@ export const configModuleOptions: ConfigModuleOptions = {
         secure: false,
         sameSite: true,
         maxAge: 604800000,
-        httpOnly: true,
-      },
-    }),
-  ],
+        httpOnly: true
+      }
+    })
+  ]
 };
