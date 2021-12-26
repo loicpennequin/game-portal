@@ -5,9 +5,8 @@ import {
   DeepPartial,
   FindManyOptions,
   FindOneOptions,
-  getConnection,
+  getConnection
 } from 'typeorm';
-import { Log } from 'src/core/decorators/log.decorator';
 import { UUID } from '@gp/shared';
 import { BaseEntity } from '../entities/base.entity';
 
@@ -26,25 +25,21 @@ export type AddRelationOptions = {
 export abstract class BaseCRUDService<T extends BaseEntity> {
   constructor(protected readonly repository: Repository<T>) {}
 
-  @Log()
   findAll(options?: FindManyOptions): Promise<T[]> {
     return this.repository.find(options);
   }
 
-  @Log()
   findById(id: UUID, options: FindOneOptions<T> = {}): Promise<T> {
     return this.findOne({
       where: { id },
-      ...options,
+      ...options
     });
   }
 
-  @Log()
   findByIds(ids: UUID[], options: FindManyOptions<T> = {}): Promise<T[]> {
     return this.repository.findByIds(ids, options);
   }
 
-  @Log()
   async findOne(options: FindOneOptions = {}): Promise<T> {
     try {
       return await this.repository.findOneOrFail(options);
@@ -54,39 +49,31 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
     }
   }
 
-  @Log()
+  count(options: FindManyOptions<T>) {
+    return this.repository.count(options);
+  }
+
   delete(id: UUID): Promise<DeleteResult> {
     return this.repository.delete(id);
   }
 
-  @Log()
-  async create(
-    entity: DeepPartial<T>,
-    options: FindOneOptions = {},
-  ): Promise<T> {
+  async create(entity: DeepPartial<T>, options: FindOneOptions = {}): Promise<T> {
     const result = await this.repository.create(entity).save();
 
     return this.findById(result.id, options);
   }
 
-  @Log()
   async updateById(
     id: UUID,
     entity: DeepPartial<T>,
-    options: FindOneOptions = {},
+    options: FindOneOptions = {}
   ): Promise<T> {
     await this.repository.create({ id, ...entity }).save();
 
     return this.findById(id, options);
   }
 
-  @Log()
-  addToRelation({
-    ownerClass,
-    owner,
-    relationName,
-    entity,
-  }: AddRelationOptions) {
+  addToRelation({ ownerClass, owner, relationName, entity }: AddRelationOptions) {
     return getConnection()
       .createQueryBuilder()
       .relation(ownerClass, relationName)

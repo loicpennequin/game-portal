@@ -1,14 +1,4 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseInterceptors,
-  UsePipes,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
@@ -24,7 +14,7 @@ export class UserController extends BaseController {
 
   @Post()
   @AccessControl({
-    bodyDtoClass: CreateUserDto,
+    bodyDtoClass: CreateUserDto
   })
   create(@Body() dto: CreateUserDto) {
     return this.userService.create(dto);
@@ -44,13 +34,13 @@ export class UserController extends BaseController {
   @AccessControl({
     roles: {
       USER: accessControlPolicies.OWN,
-      ADMIN: accessControlPolicies.ANY,
+      ADMIN: accessControlPolicies.ANY
     },
     isOwn: req => req.user.id === req.params.id,
-    bodyDtoClass: UpdateUserDto,
+    bodyDtoClass: UpdateUserDto
   })
   update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
-    console.log('dto', dto);
+    console.log(id, dto);
     return this.userService.updateById(id, dto);
   }
 

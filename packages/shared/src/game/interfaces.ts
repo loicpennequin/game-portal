@@ -9,3 +9,8 @@ export interface IGame extends IEntity {
   status: gameStatus;
   owner: IUser;
 }
+
+export interface ICreateGameDto {
+  name: string;
+  appUrl: string;
+}

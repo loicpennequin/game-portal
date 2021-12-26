@@ -65,7 +65,7 @@ export class SerializerInterceptor extends ClassSerializerInterceptor {
 
       return {
         ...options,
-        groups: entity.isOwnedByCurrentUser(user.id)
+        groups: entity.isOwnedByCurrentUser(user?.id)
           ? options.groups.concat(serializationGroups.OWNED)
           : options.groups
       };

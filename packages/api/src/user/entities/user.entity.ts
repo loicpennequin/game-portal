@@ -18,7 +18,7 @@ import {
   IsNotEmpty
 } from 'class-validator';
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Expose } from 'class-transformer';
 import { serializationGroups } from 'src/core/core.constants';
@@ -67,10 +67,6 @@ export class User extends BaseEntity implements IUser {
   @IsEnum(userRoles, { each: true })
   roles: userRoles[];
 
-  @Length(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)
-  @IsOptional()
-  password?: string;
-
   isOwnedByCurrentUser(userId: UUID) {
     return userId === this.id;
   }
@@ -78,11 +74,6 @@ export class User extends BaseEntity implements IUser {
   @BeforeInsert()
   acceptTos() {
     this.tosAcceptedAt = new Date().toISOString();
-  }
-
-  @BeforeInsert()
-  async hashPassword() {
-    this.passwordHash = await bcrypt.hash(this.password, 10);
   }
 
   validatePassword(password: string): Promise<boolean> {

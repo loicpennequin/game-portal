@@ -10,6 +10,7 @@ import { CoreModule } from 'src/core/core.module';
 import { DatabaseModule } from 'src/database/database.module';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { GameModule } from 'src/game/game.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from 'src/auth/auth.module';
     CoreModule,
     UserModule,
     AuthModule,
-  ],
+    GameModule
+  ]
 })
 export class AppModule {}
