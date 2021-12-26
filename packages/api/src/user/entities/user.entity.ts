@@ -40,7 +40,10 @@ export class User extends BaseEntity implements IUser {
   email: Email;
 
   @Column({ type: 'varchar', nullable: false })
-  hashedPassword: string;
+  passwordHash: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  refreshTokenHash: string;
 
   @Expose({
     groups: [serializationGroups.OWNED, serializationGroups.ADMIN]
@@ -79,11 +82,10 @@ export class User extends BaseEntity implements IUser {
 
   @BeforeInsert()
   async hashPassword() {
-    const saltOrRounds = 12;
-    this.hashedPassword = await bcrypt.hash(this.password, saltOrRounds);
+    this.passwordHash = await bcrypt.hash(this.password, 10);
   }
 
   validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.hashedPassword);
+    return bcrypt.compare(password, this.passwordHash);
   }
 }
