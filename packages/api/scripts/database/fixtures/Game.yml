@@ -1,0 +1,7 @@
+entity: Game
+processor: ../processors/game
+items:
+  game{1..10}:
+    name: 'Game($current)'
+    appUrl: '{{internet.url}}'
+    owner: '@user*'

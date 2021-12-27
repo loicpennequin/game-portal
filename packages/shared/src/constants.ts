@@ -5,3 +5,5 @@ export const PASSWORD_MAX_LENGTH = 40;
 export const PASSWORD_REGEXP = new RegExp(
   `^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{${PASSWORD_MIN_LENGTH},${PASSWORD_MAX_LENGTH}}$`
 );
+export const GAME_MIN_RATING = 0;
+export const GAME_MAX_RATING = 5;

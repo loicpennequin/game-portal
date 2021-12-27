@@ -18,15 +18,18 @@ import {
 } from 'class-validator';
 import { serializationGroups } from 'src/core/core.constants';
 import { Hash } from '../decorators/hash.decorator';
+import { IsUniqueUser } from '../decorators/is-unique-user.decorator';
 
 export class UpdateUserDto implements IUpdateUser {
   @Length(USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH)
   @IsString()
+  @IsUniqueUser()
   @IsOptional()
   username?: string;
 
   @IsEmail()
   @IsOptional()
+  @IsUniqueUser()
   email?: Email;
 
   @Length(PASSWORD_MIN_LENGTH, PASSWORD_MAX_LENGTH)

@@ -9,3 +9,8 @@ export const serializationGroups = {
   [userRoles.ADMIN]: userRoles.ADMIN,
   OWNED: 'OWNED'
 };
+
+export const validationGroups = {
+  CREATE: 'create',
+  UPDATE: 'update'
+};

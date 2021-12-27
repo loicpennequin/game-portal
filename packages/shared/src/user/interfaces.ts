@@ -18,5 +18,5 @@ export interface ICreateUser {
   hasAcceptedTos: boolean;
 }
 
-export type IUpdateUser = Partial<Omit<IUser, 'tosAcceptedAt'>> &
+export type IUpdateUser = Partial<Omit<IUser, 'hasAcceptedTos'>> &
   Partial<Pick<ICreateUser, 'password' | 'passwordConfirm'>>;

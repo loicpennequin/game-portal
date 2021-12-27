@@ -22,7 +22,8 @@
     "db:mig:gen": "yarn typeorm migration:generate -n migration",
     "db:mig:run": "yarn typeorm migration:run",
     "db:seed:run": "node --require ts-node/register -r tsconfig-paths/register ../../node_modules/typeorm-fixtures-cli/dist/cli.js ./scripts/database/fixtures --config scripts/database/fixtures/ormconfig.ts",
-    "db:setup": "yarn db:stop; yarn db:destroy; yarn db:create; yarn db:start; yarn db:mig:run; yarn db:seed:run"
+    "db:setup": "yarn db:stop; yarn db:destroy; yarn db:create; yarn db:start; yarn db:mig:run; yarn db:seed:run",
+    "predb:seed:run": "node --require ts-node/register -r tsconfig-paths/register  ./scripts/database/clearDb.ts"
   },
   "dependencies": {
     "@golevelup/ts-jest": "^0.3.1",

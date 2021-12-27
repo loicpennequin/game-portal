@@ -15,9 +15,8 @@ export type OptionsMapperOptions = {
   type?: Type<BaseEntity>;
 };
 
-export type AddRelationOptions = {
-  ownerClass: Type<BaseEntity>;
-  owner: BaseEntity;
+export type RelationOptions = {
+  owner: UUID | BaseEntity;
   relationName: string;
   entity: UUID | BaseEntity;
 };
@@ -26,6 +25,7 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
   constructor(protected readonly repository: Repository<T>) {}
 
   findAll(options?: FindManyOptions): Promise<T[]> {
+    console.log(Object.keys(this.repository.metadata));
     return this.repository.find(options);
   }
 
@@ -73,10 +73,33 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
     return this.findById(id, options);
   }
 
-  addToRelation({ ownerClass, owner, relationName, entity }: AddRelationOptions) {
+  loadRelation({
+    owner,
+    relationName
+  }: {
+    owner: UUID | BaseEntity;
+    relationName: string;
+  }) {
+    const query = getConnection()
+      .createQueryBuilder()
+      .relation(this.repository.target, relationName)
+      .of(owner);
+
+    const { relations } = this.repository.metadata;
+
+    const relation = relations.find(
+      relation => relation.propertyName === relationName
+    );
+
+    return relation.isOneToMany || relation.isManyToMany
+      ? query.loadMany()
+      : query.loadOne();
+  }
+
+  addToRelation({ owner, relationName, entity }: RelationOptions) {
     return getConnection()
       .createQueryBuilder()
-      .relation(ownerClass, relationName)
+      .relation(this.repository.target, relationName)
       .of(owner)
       .add(entity);
   }

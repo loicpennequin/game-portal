@@ -18,10 +18,18 @@ import {
   IsNotEmpty
 } from 'class-validator';
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  RelationId
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Expose } from 'class-transformer';
 import { serializationGroups } from 'src/core/core.constants';
+import { Game } from 'src/game/entities/game.entity';
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -66,6 +74,16 @@ export class User extends BaseEntity implements IUser {
   })
   @IsEnum(userRoles, { each: true })
   roles: userRoles[];
+
+  @OneToMany(
+    () => Game,
+    game => game.owner
+  )
+  games: Game[];
+
+  @Expose()
+  @RelationId((user: User) => user.games)
+  gamesIds: UUID[];
 
   isOwnedByCurrentUser(userId: UUID) {
     return userId === this.id;
