@@ -7,3 +7,4 @@ export * from './user';
 export * from './friend-request';
 export * from './game';
 export * from './auth';
+export * from './core';

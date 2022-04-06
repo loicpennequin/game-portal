@@ -4,7 +4,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   BeforeInsert,
-  BeforeUpdate,
+  BeforeUpdate
 } from 'typeorm';
 import { DateString, UUID } from '@gp/shared';
 import { validateOrReject } from 'class-validator';
@@ -28,6 +28,4 @@ export abstract class BaseEntity extends TypeOrmBaseEntity {
   async validate() {
     await validateOrReject(this, { skipMissingProperties: true });
   }
-
-  abstract isOwnedByCurrentUser(userId: UUID);
 }

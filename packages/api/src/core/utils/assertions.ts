@@ -15,8 +15,7 @@ export const isPlainObject = (fn: any): fn is object => {
     return true;
   }
   const ctor =
-    Object.prototype.hasOwnProperty.call(proto, 'constructor') &&
-    proto.constructor;
+    Object.prototype.hasOwnProperty.call(proto, 'constructor') && proto.constructor;
   return (
     typeof ctor === 'function' &&
     ctor instanceof ctor &&

@@ -1,5 +1,6 @@
 import {
-  gameStatus,
+  gameStatuses,
+  GameStatus,
   GAME_MAX_RATING,
   GAME_MIN_RATING,
   IGame,
@@ -10,31 +11,36 @@ import { BaseEntity } from 'src/core/entities/base.entity';
 import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { User } from 'src/user/entities/user.entity';
+import { serializationGroups } from 'src/core/core.constants';
 
 @Entity()
 export class Game extends BaseEntity implements IGame {
-  @Expose()
   @Column({ unique: true, type: 'varchar' })
+  @Expose()
   @IsString()
   name: string;
 
-  @Expose()
   @Column({ unique: true, type: 'varchar' })
+  @Expose()
   @IsString()
   appUrl: string;
 
   @Column({ type: 'int', unsigned: true, nullable: true })
+  @Expose()
   @Min(GAME_MIN_RATING)
   @Max(GAME_MAX_RATING)
   rating: number;
 
+  @Expose({
+    groups: [serializationGroups.OWNED, serializationGroups.ADMIN]
+  })
   @Column({
     type: 'enum',
-    enum: gameStatus,
-    default: gameStatus.PENDING
+    enum: gameStatuses,
+    default: gameStatuses.PENDING
   })
-  @IsEnum(gameStatus)
-  status: gameStatus;
+  @IsEnum(gameStatuses)
+  status: GameStatus;
 
   @ManyToOne(
     () => User,
@@ -44,8 +50,4 @@ export class Game extends BaseEntity implements IGame {
 
   @RelationId((game: Game) => game.owner)
   ownerId: UUID;
-
-  isOwnedByCurrentUser(userId: UUID) {
-    return userId === this.ownerId;
-  }
 }

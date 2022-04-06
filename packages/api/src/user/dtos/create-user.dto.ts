@@ -7,14 +7,7 @@ import {
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH
 } from '@gp/shared';
-import {
-  IsBoolean,
-  IsEmail,
-  IsOptional,
-  IsString,
-  Length,
-  Matches
-} from 'class-validator';
+import { IsBoolean, IsEmail, IsString, Length, Matches } from 'class-validator';
 import { validationGroups } from 'src/core/core.constants';
 import { PropertyMatch } from 'src/core/decorators/property-match.decorator';
 import { Hash } from '../decorators/hash.decorator';
@@ -42,6 +35,6 @@ export class CreateUserDto implements ICreateUser {
   @Hash('password')
   passwordHash?: string;
 
-  @IsBoolean({ groups: [validationGroups.CREATE] })
+  @IsBoolean()
   hasAcceptedTos: boolean;
 }

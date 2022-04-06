@@ -1,14 +1,14 @@
-import { Constructor, userRoles } from '@gp/shared';
+import { Constructor, UserRole } from '@gp/shared';
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import {
   accessControlPolicies,
-  ACCESS_CONTROL_METADATA_KEY,
+  ACCESS_CONTROL_METADATA_KEY
 } from '../auth.constants';
 
 export type AccessControlMetadata = {
   roles?: {
-    [k in userRoles]?: accessControlPolicies;
+    [k in UserRole]?: accessControlPolicies;
   };
   isOwn?: (req: any) => boolean | Promise<boolean>;
   bodyDtoClass?: Constructor<any>;

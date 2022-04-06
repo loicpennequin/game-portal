@@ -1,4 +1,4 @@
-import { userRoles } from '../enums';
+import { UserRole } from '../enums';
 import { IEntity } from '../interfaces';
 import { DateString, Email, Maybe } from '../types';
 
@@ -6,7 +6,7 @@ export interface IUser extends IEntity {
   username: string;
   email: Maybe<Email>;
   tosAcceptedAt: DateString;
-  roles: userRoles[];
+  roles: UserRole[];
   isOnline: boolean;
 }
 

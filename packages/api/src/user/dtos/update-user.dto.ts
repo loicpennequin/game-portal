@@ -5,10 +5,12 @@ import {
   PASSWORD_MIN_LENGTH,
   USERNAME_MAX_LENGTH,
   USERNAME_MIN_LENGTH,
+  UserRole,
   userRoles
 } from '@gp/shared';
 import { Expose } from 'class-transformer';
 import {
+  Allow,
   IsEmail,
   IsEnum,
   IsOptional,
@@ -41,6 +43,7 @@ export class UpdateUserDto implements IUpdateUser {
   passwordConfirm?: string;
 
   @Hash('password')
+  @Allow()
   passwordHash?: string;
 
   @Expose({
@@ -48,5 +51,5 @@ export class UpdateUserDto implements IUpdateUser {
   })
   @IsEnum(userRoles, { each: true })
   @IsOptional()
-  roles?: userRoles[];
+  roles?: UserRole[];
 }

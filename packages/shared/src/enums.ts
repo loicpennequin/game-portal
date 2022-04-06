@@ -1,21 +1,27 @@
-export enum userRoles {
-  USER = 'USER',
-  ADMIN = 'ADMIN'
-}
+import { Values } from './types';
 
-export enum friendRequestStatus {
-  PENDING = 'pending',
-  ACCEPTED = 'accepted',
-  REFUSED = 'refused'
-}
+export const userRoles = {
+  USER: 'USER',
+  ADMIN: 'ADMIN'
+};
+export type UserRole = Values<typeof userRoles>;
 
-export enum gameStatus {
-  PENDING = 'pending',
-  ACCEPTED = 'accepted',
-  REFUSED = 'refused'
-}
+export const friendRequestStatuses = {
+  PENDING: 'pending',
+  ACCEPTED: 'accepted',
+  REFUSED: 'refused'
+};
+export type FriendRequestStatus = Values<typeof friendRequestStatuses>;
 
-export enum sortDirections {
-  ASC = 'ASC',
-  DESC = 'DESC'
-}
+export const gameStatuses = {
+  PENDING: 'pending',
+  ACCEPTED: 'accepted',
+  REFUSED: 'refused'
+};
+export type GameStatus = Values<typeof gameStatuses>;
+
+export const sortDirections = {
+  ASC: 'ASC',
+  DESC: 'DESC'
+};
+export type SortDirection = Values<typeof sortDirections>;

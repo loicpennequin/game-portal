@@ -11,6 +11,7 @@ import { DatabaseModule } from 'src/database/database.module';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { GameModule } from 'src/game/game.module';
+import { AccessControlModule } from 'src/access-control/access-control.module';
 
 @Module({
   imports: [
@@ -19,8 +20,9 @@ import { GameModule } from 'src/game/game.module';
     ConfigModule.forRoot(configModuleOptions),
     DatabaseModule,
     CoreModule,
-    UserModule,
     AuthModule,
+    AccessControlModule,
+    UserModule,
     GameModule
   ]
 })

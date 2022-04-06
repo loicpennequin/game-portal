@@ -5,6 +5,5 @@ export type Endpoint = `/${string}`
 export type Email = `${string}@${string}.${string}`
 export type DateString = string;
 export type Constructor<T> = { new (...args: any[]):  T };
-export type ObjectLiteral = {
-  [key: string]: any;
-}
+export type ObjectLiteral = Record<string, any>;
+export type Values<T> = T[keyof T];

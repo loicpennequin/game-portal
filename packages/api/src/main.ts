@@ -11,8 +11,8 @@ async function bootstrap() {
   app.use(
     helmet({
       contentSecurityPolicy:
-        process.env.NODE_ENV === 'production' ? undefined : false,
-    }),
+        process.env.NODE_ENV === 'production' ? undefined : false
+    })
   );
   app.use(cookieParser());
   app.useGlobalGuards(new SilentAuthGuard());
@@ -26,9 +26,8 @@ async function bootstrap() {
 
       return cb(new Error('CORS'));
     },
-    credentials: true,
+    credentials: true
   });
-
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
   await app.listen(process.env.PORT || 8000);

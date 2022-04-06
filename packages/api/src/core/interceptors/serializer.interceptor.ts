@@ -1,50 +1,45 @@
 import { ObjectLiteral } from '@gp/shared';
-import {
-  CallHandler,
-  ClassSerializerInterceptor,
-  ExecutionContext
-} from '@nestjs/common';
-import {
-  classToPlain,
-  ClassTransformOptions,
-  plainToClass
-} from 'class-transformer';
-import { isFunction } from 'lodash';
+import { CallHandler, ExecutionContext, Injectable } from '@nestjs/common';
+import { ClassTransformOptions, classToPlain } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ACCESS_CONTROL_METADATA_KEY } from 'src/auth/auth.constants';
 import { User } from 'src/user/entities/user.entity';
-import { serializationGroups } from '../core.constants';
-import { isObject } from '../utils/assertions';
+import { serializationGroups, SERIALIZER_METADATA_KEY } from '../core.constants';
+import { isObject } from 'src/core/utils/assertions';
+import { Reflector } from '@nestjs/core';
 
-export class SerializerInterceptor extends ClassSerializerInterceptor {
+export type SerializeOptions = ClassTransformOptions & { user?: User };
+
+export type SerializationPolicyHandlerCallback = (
+  entity: any,
+  user: User
+) => { isOwned: boolean };
+
+export interface ISerializationPolicyHandler {
+  handle?: SerializationPolicyHandlerCallback;
+}
+
+export type SerializationPolicyHandler =
+  | ISerializationPolicyHandler
+  | SerializationPolicyHandlerCallback;
+
+@Injectable()
+export class SerializerInterceptor {
   protected defaultOptions: ClassTransformOptions = {
     strategy: 'excludeAll',
     excludeExtraneousValues: true
   };
 
+  constructor(protected readonly reflector: Reflector) {}
+
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const contextOptions = this.getContextOptions(context);
     const request = context.switchToHttp().getRequest();
 
     const options = {
       ...this.defaultOptions,
-      ...contextOptions,
-      groups: request.user?.roles || [],
+      groups: request.user?.roles ?? [],
       user: request.user
     };
-
-    const { bodyDtoClass, isOwn } =
-      this.reflector.get(ACCESS_CONTROL_METADATA_KEY, context.getHandler()) || {};
-
-    if (bodyDtoClass) {
-      const groups = [
-        ...(request.user?.roles || []),
-        isOwn?.(request) && serializationGroups.OWNED
-      ].filter(Boolean);
-      const instance = plainToClass(bodyDtoClass, request.body, { groups });
-      request.body = classToPlain(instance, { groups });
-    }
 
     return next.handle().pipe(
       map((res: any | Array<any>) => {
@@ -53,26 +48,49 @@ export class SerializerInterceptor extends ClassSerializerInterceptor {
     );
   }
 
-  serialize(
-    response: ObjectLiteral | Array<ObjectLiteral>,
-    { user, ...options }: ClassTransformOptions & { user?: User }
-  ): ObjectLiteral | Array<ObjectLiteral> {
-    if (!isObject(response)) {
-      return response;
-    }
-    const getOptions = entity => {
-      if (isFunction(entity.isOwnedByBurrentUser)) return options;
+  getSerializeOptions<E = any>({
+    entity,
+    options
+  }: {
+    entity: E;
+    options: SerializeOptions;
+  }) {
+    const handler = this.reflector.get(SERIALIZER_METADATA_KEY, entity.constructor);
 
-      return {
-        ...options,
-        groups: entity.isOwnedByCurrentUser(user?.id)
-          ? options.groups.concat(serializationGroups.OWNED)
-          : options.groups
-      };
+    const args = [entity, options.user];
+    const { isOwned } = handler.handle ? handler.handle(...args) : handler(args);
+
+    return {
+      ...options,
+      groups: isOwned
+        ? options.groups.concat(serializationGroups.OWNED)
+        : options.groups
     };
+  }
 
-    return Array.isArray(response)
-      ? response.map(item => this.transformToPlain(item, getOptions(item)))
-      : this.transformToPlain(response, getOptions(response));
+  private serializeCollection(
+    collection: Array<ObjectLiteral>,
+    options: SerializeOptions
+  ) {
+    return collection.map(entity => this.serialize(entity, options));
+  }
+
+  serialize(
+    entity: ObjectLiteral | Array<ObjectLiteral>,
+    options: SerializeOptions
+  ): ObjectLiteral | Array<ObjectLiteral> {
+    if (!isObject(entity)) {
+      return entity;
+    }
+    if (Array.isArray(entity)) {
+      return this.serializeCollection(entity, options);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { user, ...serializeOptions } = this.getSerializeOptions({
+      entity,
+      options
+    });
+    return classToPlain(entity, serializeOptions);
   }
 }
