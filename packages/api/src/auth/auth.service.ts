@@ -1,15 +1,17 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { User } from 'src/user/entities/user.entity';
-import { UserService } from 'src/user/user.service';
 import { LoginDto } from './dtos/login.dto';
-import * as bcrypt from 'bcrypt';
+import { IAuthService } from './interfaces/auth-service.interface';
+import { IUserService } from 'src/user/interfaces/user-service.interface';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements IAuthService {
   constructor(
-    private readonly userService: UserService,
+    @Inject(IUserService)
+    private readonly userService: IUserService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {}
@@ -40,13 +42,13 @@ export class AuthService {
     return tokens;
   }
 
-  logout(user: User): Promise<User> {
+  logout(user: User) {
     return this.userService.updateById(user.id, { refreshTokenHash: null });
   }
 
   private async validateUser(authLoginDto: LoginDto): Promise<User> {
     const { email, password } = authLoginDto;
-    const user = await this.userService.findOne({ email: { eq: email } });
+    const user = await this.userService.findOne({ where: { email } });
 
     const isValid = await user?.validatePassword(password);
     if (!isValid) {

@@ -4,13 +4,16 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface
 } from 'class-validator';
-import { Injectable } from '@nestjs/common';
-import { UserService } from '../user.service';
+import { Inject, Injectable } from '@nestjs/common';
+import { IUserService } from '../interfaces/user-service.interface';
 
 @ValidatorConstraint({ name: 'IsUserUnique', async: true })
 @Injectable()
 export class IsUniqueUserConstraint implements ValidatorConstraintInterface {
-  constructor(readonly userService: UserService) {}
+  constructor(
+    @Inject(IUserService)
+    readonly userService: IUserService
+  ) {}
 
   async validate(value, { property }) {
     try {

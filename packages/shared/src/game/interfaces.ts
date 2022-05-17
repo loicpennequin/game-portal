@@ -10,7 +10,5 @@ export interface IGame extends IEntity {
   ownerId: UUID;
 }
 
-export interface ICreateGameDto {
-  name: string;
-  appUrl: string;
-}
+export type ICreateGame = Pick<IGame, 'name' | 'appUrl'>;
+export type IUpdateGame = Pick<IGame, 'name' | 'appUrl' | 'status'>;

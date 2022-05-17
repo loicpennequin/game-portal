@@ -12,8 +12,14 @@ import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
 import { Expose } from 'class-transformer';
 import { User } from 'src/user/entities/user.entity';
 import { serializationGroups } from 'src/core/core.constants';
+import { Serializable } from 'src/core/decorators/serializable.decorator';
 
 @Entity()
+@Serializable({
+  handle(entity: Game, user: User) {
+    return { isOwned: user?.id === entity.ownerId };
+  }
+})
 export class Game extends BaseEntity implements IGame {
   @Column({ unique: true, type: 'varchar' })
   @Expose()

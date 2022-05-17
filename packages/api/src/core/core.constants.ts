@@ -17,3 +17,4 @@ export const validationGroups = {
 
 export const SERIALIZER_METADATA_KEY = 'Serializer';
 export const VALIDATION_GROUPS_METADATA_KEY = 'Validator';
+export const ACCESS_CONTROL_METADATA_KEY = 'AccessControl';

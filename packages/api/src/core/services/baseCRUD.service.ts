@@ -12,6 +12,8 @@ import { UUID } from '@gp/shared';
 import { BaseEntity } from '../entities/base.entity';
 import { merge } from 'lodash';
 import { BaseQueryFilter } from '../filters/base-query.filter';
+import { DEFAULT_ITEMS_PER_PAGE } from '../core.constants';
+import { ICrudService } from '../interfaces/crud-service.interface';
 
 export type RelationOptions = {
   owner: UUID | BaseEntity;
@@ -30,31 +32,39 @@ export type FindManyOptions<T> = FindOneOptions<T> & {
   sort?: Record<string, 'ASC' | 'DESC'>;
 };
 
-export abstract class BaseCRUDService<T extends BaseEntity> {
+export abstract class BaseCRUDService<T extends BaseEntity>
+  implements ICrudService<T> {
   constructor(protected readonly repository: Repository<T>) {}
 
   private parseFindOneOptions(options: FindOneOptions<T>): TypeormFindOneOptions<T> {
-    const { relations, ...rest } = options;
+    const { relations = [], ...rest } = options;
+    let { where = [] } = options;
 
-    const whereConditions = Object.entries(rest)
-      .map(([key, val]) => {
-        if (!(val instanceof BaseQueryFilter)) return null;
+    const filters = Object.fromEntries(
+      Object.entries(rest)
+        .map(([key, val]) => {
+          if (!(val instanceof BaseQueryFilter)) return null;
 
-        return [key, Raw(val.toWhereConditions(), val.toWhereConditionsVariables())];
-      })
-      .filter(Boolean);
+          return [
+            key,
+            Raw(val.toWhereConditions(), val.toWhereConditionsVariables())
+          ];
+        })
+        .filter(Boolean)
+    );
+
+    where = Array.isArray(where) ? where : [where];
 
     return {
-      relations: options.relations,
-      where: Object.fromEntries(whereConditions)
+      relations,
+      where: where ? where.map(condition => ({ ...condition, ...filters })) : filters
     };
   }
 
   private parseFindManyOptions(
     options: FindManyOptions<T>
   ): TypeormFindManyOptions<T> {
-    const { sort, page, itemsPerPage } = options;
-
+    const { sort, page = 1, itemsPerPage = DEFAULT_ITEMS_PER_PAGE } = options;
     return {
       ...this.parseFindOneOptions(options),
       skip: (page - 1) * itemsPerPage,
@@ -64,16 +74,15 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
   }
 
   findAll(options?: FindManyOptions<T>): Promise<T[]> {
-    return this.repository.find(this.parseFindManyOptions(options));
+    const parsedOptions = this.parseFindManyOptions(options);
+
+    return this.repository.find(parsedOptions);
   }
 
   findById(id: UUID, options: FindOneOptions<T> = {}): Promise<T> {
-    const idFilter = new BaseQueryFilter();
-    idFilter.eq = options.id;
-
     return this.findOne(
-      merge(this.parseFindOneOptions(options), {
-        id: idFilter
+      merge({}, options, {
+        where: { id }
       })
     );
   }
@@ -109,29 +118,6 @@ export abstract class BaseCRUDService<T extends BaseEntity> {
     await this.repository.create({ id, ...entity }).save();
 
     return this.findById(id);
-  }
-
-  loadRelation({
-    owner,
-    relationName
-  }: {
-    owner: UUID | BaseEntity;
-    relationName: string;
-  }) {
-    const query = getConnection()
-      .createQueryBuilder()
-      .relation(this.repository.target, relationName)
-      .of(owner);
-
-    const { relations } = this.repository.metadata;
-
-    const relation = relations.find(
-      relation => relation.propertyName === relationName
-    );
-
-    return relation.isOneToMany || relation.isManyToMany
-      ? query.loadMany()
-      : query.loadOne();
   }
 
   addToRelation({ owner, relationName, entity }: RelationOptions) {

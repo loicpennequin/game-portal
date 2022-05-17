@@ -10,12 +10,22 @@ import {
 } from '@gp/shared';
 import { Length, IsString, IsEnum, IsEmail, IsNotEmpty } from 'class-validator';
 import { BaseEntity } from 'src/core/entities/base.entity';
-import { BeforeInsert, Column, Entity, OneToMany, RelationId } from 'typeorm';
+import {
+  BeforeInsert,
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  RelationId
+} from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Expose } from 'class-transformer';
 import { serializationGroups } from 'src/core/core.constants';
 import { Game } from 'src/game/entities/game.entity';
 import { SerializableUser } from '../decorators/serializable-user';
+import { FriendRequest } from 'src/friend-request/friend-request.entity';
+import { Media } from 'src/media/media.entity';
 
 @Entity()
 @SerializableUser()
@@ -66,11 +76,33 @@ export class User extends BaseEntity implements IUser {
     () => Game,
     game => game.owner
   )
+  @Expose()
   games: Game[];
 
   @Expose()
   @RelationId((user: User) => user.games)
   gamesIds: UUID[];
+
+  @Expose()
+  @OneToOne(
+    () => Media,
+    media => media.id
+  )
+  avatar: Media;
+
+  @OneToMany(
+    () => FriendRequest,
+    friendRequest => friendRequest.from
+  )
+  @Expose()
+  sentFriendRequests: FriendRequest[];
+
+  @OneToMany(
+    () => FriendRequest,
+    friendRequest => friendRequest.to
+  )
+  @Expose()
+  receivedFriendRequests: FriendRequest[];
 
   @BeforeInsert()
   acceptTos() {

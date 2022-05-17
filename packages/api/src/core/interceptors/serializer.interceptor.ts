@@ -1,5 +1,10 @@
 import { ObjectLiteral } from '@gp/shared';
-import { CallHandler, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor
+} from '@nestjs/common';
 import { ClassTransformOptions, classToPlain } from 'class-transformer';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +29,7 @@ export type SerializationPolicyHandler =
   | SerializationPolicyHandlerCallback;
 
 @Injectable()
-export class SerializerInterceptor {
+export class SerializerInterceptor implements NestInterceptor {
   protected defaultOptions: ClassTransformOptions = {
     strategy: 'excludeAll',
     excludeExtraneousValues: true
@@ -48,7 +53,7 @@ export class SerializerInterceptor {
     );
   }
 
-  getSerializeOptions<E = any>({
+  private getSerializeOptions<E = any>({
     entity,
     options
   }: {
@@ -75,18 +80,16 @@ export class SerializerInterceptor {
     return collection.map(entity => this.serialize(entity, options));
   }
 
-  serialize(
+  private serialize(
     entity: ObjectLiteral | Array<ObjectLiteral>,
     options: SerializeOptions
   ): ObjectLiteral | Array<ObjectLiteral> {
-    if (!isObject(entity)) {
-      return entity;
-    }
+    if (!isObject(entity)) return entity;
+
     if (Array.isArray(entity)) {
       return this.serializeCollection(entity, options);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { user, ...serializeOptions } = this.getSerializeOptions({
       entity,
       options

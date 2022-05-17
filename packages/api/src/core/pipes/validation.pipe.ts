@@ -67,7 +67,8 @@ export class ValidationPipe extends NestValidationPipe {
 
   public async transform(value: any, metadata: ArgumentMetadata) {
     await this.getValidationGroups(value, metadata);
+    const ret = await super.transform(value, metadata);
 
-    return super.transform(value, metadata);
+    return ret;
   }
 }

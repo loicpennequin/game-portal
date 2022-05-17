@@ -19,9 +19,14 @@ import {
   ValidateIf
 } from 'class-validator';
 import { serializationGroups } from 'src/core/core.constants';
+import { ValidationGroups } from 'src/core/decorators/validation-group.decorator';
 import { Hash } from '../decorators/hash.decorator';
 import { IsUniqueUser } from '../decorators/is-unique-user.decorator';
+import { User } from '../entities/user.entity';
 
+@ValidationGroups(async (entity: User, { user }) =>
+  [user.id === entity.id && serializationGroups.OWNED].filter(Boolean)
+)
 export class UpdateUserDto implements IUpdateUser {
   @Length(USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH)
   @IsString()

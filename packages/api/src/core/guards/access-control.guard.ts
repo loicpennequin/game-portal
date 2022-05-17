@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, Type } from '@nestjs/common';
 import { ModuleRef, Reflector } from '@nestjs/core';
-import { ACCESS_CONTROL_METADATA_KEY } from '../access-control.constants';
+import { ACCESS_CONTROL_METADATA_KEY } from '../core.constants';
 import { PolicyHandler } from '../decorators/access-control.decorator';
 import { AccessControlAbilityFactory } from '../factories/access-control-ability.factory';
 

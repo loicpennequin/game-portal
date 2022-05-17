@@ -11,7 +11,8 @@ import { DatabaseModule } from 'src/database/database.module';
 import { UserModule } from 'src/user/user.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { GameModule } from 'src/game/game.module';
-import { AccessControlModule } from 'src/access-control/access-control.module';
+import { FriendRequestModule } from 'src/friend-request/friend-request.module';
+import { MediaModule } from 'src/media/media.module';
 
 @Module({
   imports: [
@@ -21,9 +22,10 @@ import { AccessControlModule } from 'src/access-control/access-control.module';
     DatabaseModule,
     CoreModule,
     AuthModule,
-    AccessControlModule,
     UserModule,
-    GameModule
+    GameModule,
+    MediaModule,
+    FriendRequestModule
   ]
 })
 export class AppModule {}

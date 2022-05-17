@@ -1,8 +1,8 @@
-import { IPolicyHandler } from 'src/access-control/decorators/access-control.decorator';
+import { IPolicyHandler } from 'src/core/decorators/access-control.decorator';
 import {
   actions,
   AppAbility
-} from 'src/access-control/factories/access-control-ability.factory';
+} from 'src/core/factories/access-control-ability.factory';
 import { MaybeAuthenticatedRequest } from 'src/core/pipes/validation.pipe';
 import { User } from '../entities/user.entity';
 

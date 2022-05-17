@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   HttpCode,
+  Inject,
   Post,
   Req,
   Res,
@@ -11,14 +12,15 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { Response } from 'express';
 import { REFRESH_TOKEN_COOKIE_NAME } from './auth.constants';
-import { AuthService } from './auth.service';
 import { LoginDto } from './dtos/login.dto';
 import { JwtRefreshGuard } from './guards/refresh.guard';
+import { IAuthService } from './interfaces/auth-service.interface';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService,
+    @Inject(IAuthService)
+    private readonly authService: IAuthService,
     private readonly configService: ConfigService
   ) {}
 

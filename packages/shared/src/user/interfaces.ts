@@ -1,22 +1,32 @@
+import { IMedia } from 'src/media';
 import { UserRole } from '../enums';
 import { IEntity } from '../interfaces';
 import { DateString, Email, Maybe } from '../types';
 
-export interface IUser extends IEntity {
+type UserEditableFields = {
   username: string;
   email: Maybe<Email>;
-  tosAcceptedAt: DateString;
   roles: UserRole[];
+};
+
+type PasswordFields = {
+  password: string;
+  passwordConfirm: string;
+};
+
+export interface IUser extends IEntity, UserEditableFields {
+  tosAcceptedAt: DateString;
+  avatar: Maybe<IMedia>;
   isOnline: boolean;
 }
 
-export interface ICreateUser {
+export interface ICreateUser extends PasswordFields {
   username: string;
   email: Email;
-  password: string;
-  passwordConfirm: string;
   hasAcceptedTos: boolean;
 }
 
-export type IUpdateUser = Partial<Omit<IUser, 'hasAcceptedTos'>> &
-  Partial<Pick<ICreateUser, 'password' | 'passwordConfirm'>>;
+export type IUpdateUser = Partial<UserEditableFields> &
+  Partial<PasswordFields> & {
+    avatar?: Blob;
+  };

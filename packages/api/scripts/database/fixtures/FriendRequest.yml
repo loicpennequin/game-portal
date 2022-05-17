@@ -1,0 +1,6 @@
+entity: FriendRequest
+processor: ../processors/friendRequest
+items:
+  friendRequest{1..50}:
+    from: '@user*'
+    to: '@user*'

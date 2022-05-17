@@ -1,8 +1,8 @@
 export interface IQueryFilter {
-  gt?: number;
-  gte?: number;
-  lt?: number;
-  lte?: number;
+  gt?: string | number;
+  gte?: string | number;
+  lt?: string | number;
+  lte?: string | number;
   eq?: string | number;
   contains?: string;
   between?: [number, number];

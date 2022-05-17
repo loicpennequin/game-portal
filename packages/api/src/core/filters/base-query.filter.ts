@@ -1,7 +1,10 @@
 import { IQueryFilter } from '@gp/shared';
 import { Transform } from 'class-transformer';
 
+const DATE_REGEXP = /([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/;
 const parseIntTransform = ({ value }) => {
+  if (DATE_REGEXP.test(value)) return value;
+
   const parsed = parseInt(value, 10);
 
   return Number.isNaN(parsed) ? value : parsed;
@@ -9,16 +12,16 @@ const parseIntTransform = ({ value }) => {
 
 export class BaseQueryFilter implements IQueryFilter {
   @Transform(parseIntTransform, { toClassOnly: true })
-  gt?: number;
+  gt?: number | string;
 
   @Transform(parseIntTransform, { toClassOnly: true })
-  gte?: number;
+  gte?: number | string;
 
   @Transform(parseIntTransform, { toClassOnly: true })
-  lt?: number;
+  lt?: number | string;
 
   @Transform(parseIntTransform, { toClassOnly: true })
-  lte?: number;
+  lte?: number | string;
 
   @Transform(parseIntTransform, { toClassOnly: true })
   eq?: string | number;

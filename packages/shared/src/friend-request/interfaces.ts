@@ -5,7 +5,9 @@ import { UUID } from '../types';
 
 export interface IFriendRequest extends IEntity {
   from: IUser;
+  fromId: UUID;
   to: IUser;
+  toId: UUID;
   status: FriendRequestStatus;
 }
 

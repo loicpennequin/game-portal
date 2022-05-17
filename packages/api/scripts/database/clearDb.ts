@@ -9,12 +9,8 @@ import ormConfig from './ormconfig';
   });
   await connection.connect();
 
-  const entities = getConnection().entityMetadatas;
+  await connection.dropDatabase();
+  await connection.synchronize();
 
-  for (const entity of entities) {
-    const repository = getConnection().getRepository(entity.name);
-    console.log(`Clearing table ${entity.tableName}`);
-    await repository.delete({});
-  }
   await getConnection().close();
 })();

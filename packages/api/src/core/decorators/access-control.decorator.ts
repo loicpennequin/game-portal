@@ -1,12 +1,16 @@
 import { applyDecorators, SetMetadata, Type, UseGuards } from '@nestjs/common';
-import { ACCESS_CONTROL_METADATA_KEY } from '../access-control.constants';
+import { ACCESS_CONTROL_METADATA_KEY } from '../core.constants';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AppAbility } from '../factories/access-control-ability.factory';
 import { AccessControlGuard } from '../guards/access-control.guard';
 import { MaybeAuthenticatedRequest } from 'src/core/pipes/validation.pipe';
 
 export interface IPolicyHandler {
-  register?(options: any): void;
+  register?(options: {
+    can: any;
+    cannot: any;
+    request: MaybeAuthenticatedRequest;
+  }): void;
   handle(ability: AppAbility, request: MaybeAuthenticatedRequest): boolean;
 }
 

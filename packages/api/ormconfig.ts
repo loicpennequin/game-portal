@@ -15,6 +15,6 @@ export default {
   migrations: [],
   migrationsTableName: 'migrations_typeorm',
   cli: {
-    migrationsDir: 'scripts/database/migrations',
-  },
+    migrationsDir: 'scripts/database/migrations'
+  }
 };

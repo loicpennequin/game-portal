@@ -3,17 +3,17 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Request } from 'express';
-import { UserService } from 'src/user/user.service';
 import { REFRESH_TOKEN_COOKIE_NAME } from '../auth.constants';
 import { UUID } from '@gp/shared';
 import { User } from 'src/user/entities/user.entity';
+import { IUserService } from 'src/user/interfaces/user-service.interface';
 
 @Injectable()
 export class JwtRefreshTokenStrategy extends PassportStrategy(
   Strategy,
   'jwt-refresh-token'
 ) {
-  constructor(configService: ConfigService, private userService: UserService) {
+  constructor(configService: ConfigService, private userService: IUserService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
