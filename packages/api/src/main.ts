@@ -5,6 +5,7 @@ import { AppModule } from 'src/app';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { useContainer } from 'class-validator';
 import { SilentAuthGuard } from './auth/guards/silent-auth.guard';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -29,6 +30,14 @@ async function bootstrap() {
     credentials: true
   });
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+  const config = new DocumentBuilder()
+    .setTitle('Game Portal REST API')
+    .setDescription('todo')
+    .setVersion('1.0')
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT || 8000);
 }
