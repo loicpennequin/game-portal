@@ -1,0 +1,62 @@
+{
+  "name": "@gp/web",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint --fix --ext .js,.vue --ignore-path .gitignore src",
+    "format": "prettier .  --write",
+    "lint-staged": "lint-staged",
+    "db:sync": "prisma generate & prisma db push",
+    "db:ui": "prisma studio",
+    "test": "vitest  --config ./vitest.config.ts",
+    "test:watch": "vitest  --config ./vitest.config.ts --watch"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.33",
+    "@nuxt/test-utils": "^3.0.0-rc.11",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "@unocss/nuxt": "^0.45.22",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@vue/eslint-config-typescript": "^11.0.0",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-vue": "^9.5.1",
+    "husky": "^8.0.1",
+    "jsdom": "^20.0.0",
+    "lint-staged": "^13.0.3",
+    "nuxt": "3.0.0-rc.11",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.3",
+    "unplugin-auto-import": "^0.11.2",
+    "unplugin-vue-components": "^0.22.7",
+    "vitest": "^0.23.4"
+  },
+  "lint-staged": {
+    "*.(ts|vue)": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@nuxtjs/color-mode": "^3.1.6",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@prisma/client": "4.3.1",
+    "@testing-library/vue": "^6.6.1",
+    "@vueuse/nuxt": "^9.2.0",
+    "chalk": "^5.0.1",
+    "nuxt-typed-router": "^1.2.3",
+    "prisma": "^4.3.1",
+    "trpc-nuxt": "^0.3.0",
+    "vue-query": "^2.0.0-beta.12",
+    "zod": "^3.19.1"
+  }
+}

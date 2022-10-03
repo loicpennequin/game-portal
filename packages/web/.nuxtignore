@@ -1,0 +1,6 @@
+layouts/*.test.vue
+pages/*.test.vue
+components/*.test.vue
+composables/*.test.ts
+plugins/*.test.ts
+middleware/*.test.ts

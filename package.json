@@ -2,8 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "api": "yarn workspace @gp/api",
-    "shared": "yarn workspace @gp/shared"
+    "web": "yarn workspace @gp/web"
   },
   "workspaces": {
     "packages": [
