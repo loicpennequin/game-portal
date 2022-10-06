@@ -1,32 +1,19 @@
 import { resolve } from 'path';
-import { fileURLToPath } from 'url';
+import fg from 'fast-glob';
 import fs from 'fs-extra';
 import dedent from 'dedent';
-import { dirname } from 'pathe';
 import { trpcLog } from './create-logger';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-export const generateTrpcRouter = () => {
-  const MODULES_PATH = resolve(__dirname, '../..');
-  const moduleDirs = fs
-    .readdirSync(MODULES_PATH)
-    .map(fileOrDir => ({
-      name: fileOrDir,
-      path: resolve(MODULES_PATH, fileOrDir)
-    }))
-    .filter(({ path }) => fs.lstatSync(path).isDirectory);
-
-  const modulesWithRouter = moduleDirs.filter(({ path }) =>
-    fs.existsSync(resolve(path, 'trpc-router.ts'))
+export const generateTrpcRouter = async () => {
+  const routers = (await fg('**/*.trpc.ts')).map(path => ({
+    name: path.slice(path.lastIndexOf('/') + 1).replace('.trpc.ts', ''),
+    importPath: path.replace('src', '@').replace('.ts', '')
+  }));
+  const routerImportBlocks = routers.map(
+    ({ name, importPath }) => `import ${name}Router from '${importPath}';`
   );
 
-  const routerImportBlocks = modulesWithRouter.map(
-    ({ name }) =>
-      `import { default as ${name}Router } from '@/modules/${name}/server/trpc-router';`
-  );
-
-  const routerBlocks = modulesWithRouter.map(({ name }) => {
+  const routerBlocks = routers.map(({ name }) => {
     return dedent`.merge('${name}.', ${name}Router)`;
   });
 
@@ -40,9 +27,9 @@ export const generateTrpcRouter = () => {
   */
   
   import * as trpc from '@trpc/server';
-  import { createRouter } from '@/modules/trpc/utils/create-router';
   ${routerImportBlocks.join('\n')}
-  export const router = trpc.router()${routerBlocks.join('\n')}`;
+
+  export const router = trpc.router()${routerBlocks.join('\n')};`;
 
   fs.writeFileSync(routerPath, template);
 

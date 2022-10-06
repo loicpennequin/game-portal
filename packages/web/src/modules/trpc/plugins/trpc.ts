@@ -6,8 +6,11 @@ import { AppRouter } from '~~/src/modules/trpc/utils/types';
 
 export default defineNuxtPlugin(nuxtApp => {
   const headers = useRequestHeaders();
+  const protocol = import.meta.env.DEV ? 'http://' : 'https://';
 
-  const url = process.server ? '' : `${window.location.origin}/api/trpc`;
+  const url = process.server
+    ? `${protocol}${headers.host}/api/trpc`
+    : `${window.location.origin}/api/trpc`;
 
   if (!nuxtApp.payload['trpc-nuxt-header']) {
     nuxtApp.payload['nuxtApp.payload.state'] = {}; // @fixme
