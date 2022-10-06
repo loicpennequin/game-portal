@@ -30,6 +30,7 @@
     "eslint-plugin-nuxt": "^4.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "^9.5.1",
+    "fs-extra": "^10.1.0",
     "husky": "^8.0.1",
     "jsdom": "^20.0.0",
     "lint-staged": "^13.0.3",
@@ -40,23 +41,22 @@
     "unplugin-vue-components": "^0.22.7",
     "vitest": "^0.23.4"
   },
+  "dependencies": {
+    "@nuxtjs/color-mode": "^3.1.6",
+    "@nuxtjs/eslint-config-typescript": "^11.0.0",
+    "@prisma/client": "4.3.1",
+    "@tanstack/vue-query": "^4.10.1",
+    "@testing-library/vue": "^6.6.1",
+    "@vueuse/nuxt": "^9.2.0",
+    "awilix": "^7.0.3",
+    "nuxt-typed-router": "^1.2.3",
+    "prisma": "^4.3.1",
+    "zod": "^3.19.1"
+  },
   "lint-staged": {
     "*.(ts|vue)": [
       "eslint --fix",
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@nuxtjs/color-mode": "^3.1.6",
-    "@nuxtjs/eslint-config-typescript": "^11.0.0",
-    "@prisma/client": "4.3.1",
-    "@testing-library/vue": "^6.6.1",
-    "@vueuse/nuxt": "^9.2.0",
-    "chalk": "^5.0.1",
-    "nuxt-typed-router": "^1.2.3",
-    "prisma": "^4.3.1",
-    "trpc-nuxt": "^0.3.0",
-    "vue-query": "^2.0.0-beta.12",
-    "zod": "^3.19.1"
   }
 }

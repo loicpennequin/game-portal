@@ -1,0 +1,25 @@
+{
+  "name": "@gp/db",
+  "version": "0.0.0",
+  "main": "./dist/index.js",
+  "module": "./src/index.mjs",
+  "types": "./dist/index.d.ts",
+  "private": true,
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "sync": "prisma generate & prisma db push",
+    "ui": "prisma studio"
+  },
+  "dependencies": {
+    "@prisma/client": "4.3.1",
+    "chalk": "^4.1.2",
+    "prisma": "^4.3.1"
+  },
+  "devDependencies": {
+    "tsup": "^6.2.3"
+  }
+}

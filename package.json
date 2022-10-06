@@ -2,7 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "web": "yarn workspace @gp/web"
+    "web": "yarn workspace @gp/web",
+    "db": "yarn workspace @gp/db"
   },
   "workspaces": {
     "packages": [

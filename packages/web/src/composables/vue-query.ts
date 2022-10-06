@@ -4,4 +4,4 @@ export {
   useQueryClient,
   useInfiniteQuery,
   useMutation
-} from 'vue-query';
+} from '@tanstack/vue-query';
