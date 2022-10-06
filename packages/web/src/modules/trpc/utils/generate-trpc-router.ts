@@ -1,4 +1,5 @@
 import { resolve } from 'path';
+import { format, resolveConfig } from 'prettier';
 import fg from 'fast-glob';
 import fs from 'fs-extra';
 import dedent from 'dedent';
@@ -17,8 +18,8 @@ export const generateTrpcRouter = async () => {
     return dedent`.merge('${name}.', ${name}Router)`;
   });
 
-  const routerPath = resolve(process.cwd(), 'src/generated/trpc-router.ts');
-  fs.ensureFileSync(routerPath);
+  const outputPath = resolve(process.cwd(), 'src/generated/trpc-router.ts');
+  fs.ensureFileSync(outputPath);
 
   const template = dedent`
   /* 
@@ -31,7 +32,13 @@ export const generateTrpcRouter = async () => {
 
   export const router = trpc.router()${routerBlocks.join('\n')};`;
 
-  fs.writeFileSync(routerPath, template);
+  fs.writeFileSync(
+    outputPath,
+    format(template, {
+      ...(await resolveConfig(outputPath)),
+      parser: 'typescript'
+    })
+  );
 
   trpcLog('TRPC Router generated');
 };

@@ -1,7 +1,7 @@
 import { addServerHandler, defineNuxtModule } from '@nuxt/kit';
 import { resolve } from 'pathe';
 import { setupNuxtModule } from '../../utils/nuxt-module';
-import { generateTrpcRouter } from './utils/generate-trpc-router-file';
+import { generateTrpcRouter } from './utils/generate-trpc-router';
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
