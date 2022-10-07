@@ -13,9 +13,10 @@ import type {
 } from 'vue-router';
 import type { TypedRouteList } from './__routes';
 
-export type RouteListDecl = { index: 'index' };
+export type RouteListDecl = { authCallback: 'auth-callback'; index: 'index' };
 
 export type TypedRouteParams = {
+  'auth-callback': never;
   index: never;
 };
 

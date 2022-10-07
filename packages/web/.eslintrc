@@ -18,6 +18,8 @@
   "plugins": ["@typescript-eslint", "vue", "nuxt"],
   "rules": {
     "curly": "off",
+    "import/default": "off",
+    "import/no-named-as-default-member": "off",
 
     "vue/no-multiple-template-root": "off",
     "no-use-before-define": "off",

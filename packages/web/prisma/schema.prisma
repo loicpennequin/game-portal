@@ -14,18 +14,18 @@ model Thing {
 }
 
 model User {
-    id                       String           @id @unique @default(cuid())
-    createdAt                DateTime         @default(now())
-    updatedAt                DateTime?        @updatedAt
-    email                    String           @unique
-    oneTimePassword          String?
-    oneTimePasswordExpiresAt DateTime?
-    discordId                String?
-    username                 String?
-    games                    Game[]
-    gameSessions             GameSession[]
-    sentFriendRequests       FriendRequests[] @relation("sentFriendRequests")
-    receivedFriendRequests   FriendRequests[] @relation("receivedFriendRequests")
+    id                     String           @id @unique @default(cuid())
+    createdAt              DateTime         @default(now())
+    updatedAt              DateTime?        @updatedAt
+    email                  String           @unique
+    oneTimePassword        String?
+    refreshToken           String?          @unique @db.VarChar(200)
+    discordId              String?
+    username               String?
+    games                  Game[]
+    gameSessions           GameSession[]
+    sentFriendRequests     FriendRequests[] @relation("sentFriendRequests")
+    receivedFriendRequests FriendRequests[] @relation("receivedFriendRequests")
 }
 
 enum FriendRequestStatuses {

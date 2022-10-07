@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { resolveHTTPResponse } from '@trpc/server';
 import { createURL } from 'ufo';
 import { isMethod } from 'h3';
@@ -18,7 +19,13 @@ export default defineEventHandler(async event => {
       query: $url.searchParams
     },
     path: $url.pathname.substring(endpoint.length),
-    createContext: () => Promise.resolve(createContext(event))
+    createContext: () => Promise.resolve(createContext(event)),
+    onError({ error }) {
+      // eslint-disable-next-line no-console
+      console.log(chalk.red('[ERROR]'), '-', error.message);
+      // eslint-disable-next-line no-console
+      console.error(error.cause);
+    }
   });
 
   const { status, headers, body } = httpResponse;

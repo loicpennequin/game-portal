@@ -23,7 +23,7 @@ export const useTypedRouter = (): {
 } => {
   const { $router } = useNuxtApp();
 
-  const routesList = { index: 'index' };
+  const routesList = { authCallback: 'auth-callback', index: 'index' };
 
   return {
     router: $router,

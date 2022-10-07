@@ -1,15 +1,14 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
-// FIXME something wrong with @types/fx-extra
-// eslint-disable-next-line import/named
-import { readdirSync, existsSync } from 'fs-extra';
+import fs from 'fs-extra';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const MODULES_PATH = resolve(__dirname, 'src/modules');
-const modules = readdirSync(MODULES_PATH)
+const modules = fs
+  .readdirSync(MODULES_PATH)
   .map(m => resolve(MODULES_PATH, `${m}/module.ts`))
-  .filter(entryPoint => existsSync(entryPoint));
+  .filter(entryPoint => fs.existsSync(entryPoint));
 
 export default defineNuxtConfig({
   srcDir: 'src',
@@ -25,7 +24,6 @@ export default defineNuxtConfig({
     appUrl: '',
     jwtSecret: '',
     refreshTokenSecret: '',
-    cookieSecret: '',
     sendgridApiKey: ''
   },
 

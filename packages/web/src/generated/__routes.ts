@@ -4,6 +4,9 @@
  * ---------------------
  * */
 
-export const routerPagesNames = { index: 'index' as const };
+export const routerPagesNames = {
+  authCallback: 'auth-callback' as const,
+  index: 'index' as const
+};
 
-export type TypedRouteList = 'index';
+export type TypedRouteList = 'auth-callback' | 'index';

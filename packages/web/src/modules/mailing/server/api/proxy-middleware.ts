@@ -3,8 +3,7 @@ import { defineEventHandler } from 'h3';
 import { createProxyMiddleware } from 'http-proxy-middleware'; // npm install http-proxy-middleware@beta
 
 const proxy = createProxyMiddleware('/maildev', {
-  target: `http://localhost:1080`,
-  ws: true
+  target: `http://localhost:1080`
 });
 
 export default defineEventHandler(async event => {
