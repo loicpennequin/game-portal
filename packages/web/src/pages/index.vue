@@ -1,10 +1,14 @@
 <script setup lang="ts">
 const { mutate, isSuccess, error } = useTrpcMutation('auth.emailSignin');
 const email = ref('');
+
+const onSubmit = () => {
+  mutate({ email: email.value });
+};
 </script>
 
 <template>
-  <form gap-2 flex flex-col items-start @submit.prevent="mutate({ email })">
+  <form gap-2 flex flex-col items-start @submit.prevent="onSubmit">
     <input v-model="email" type="email" p-1 border="1 solid gray-3" />
     <button bg-blue-3 p-3>Sign in with email</button>
   </form>

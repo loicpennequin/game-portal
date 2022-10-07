@@ -9,7 +9,7 @@ import { camelCase, startCase } from 'lodash-es';
 
 export const generateInjectables = async () => {
   const injectables = (await fg('**/*.injectable.ts')).map(path => ({
-    name: camelCase(path.split('/').at(-1).replace('.injectable.ts', '')),
+    name: camelCase(path.split('/').at(-1)?.replace('.injectable.ts', '')),
     importPath: path.replace('src', '@').replace('.ts', '')
   }));
 
