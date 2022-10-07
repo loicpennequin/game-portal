@@ -19,6 +19,13 @@ export default defineNuxtConfig({
     '@unocss/nuxt'
   ],
 
+  runtimeConfig: {
+    jwtSecret: '',
+    refreshTokenSecret: '',
+    cookieSecret: '',
+    sendgridApiKey: ''
+  },
+
   trpc: {
     baseURL: process.env.TRPC_URL,
     endpoint: '/api/trpc' // defaults to /trpc

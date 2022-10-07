@@ -7,7 +7,7 @@ import { setupNuxtModule } from '../../utils/nuxt-module';
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
-    setupNuxtModule('trpc', nuxt);
+    setupNuxtModule('mailing', nuxt);
 
     if (process.env.NODE_ENV === 'production') return;
 

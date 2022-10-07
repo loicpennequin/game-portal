@@ -4,7 +4,7 @@ import { generateInjectables } from './utils/generate-injectables';
 
 export default defineNuxtModule({
   setup(_options, nuxt) {
-    setupNuxtModule('trpc', nuxt);
+    setupNuxtModule('di', nuxt);
 
     generateInjectables();
     nuxt.hook('builder:watch', (_event, path) => {
