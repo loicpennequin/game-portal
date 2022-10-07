@@ -1,5 +1,7 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
+// FIXME something wrong with @types/fx-extra
+// eslint-disable-next-line import/named
 import { readdirSync, existsSync } from 'fs-extra';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,6 +22,7 @@ export default defineNuxtConfig({
   ],
 
   runtimeConfig: {
+    appUrl: '',
     jwtSecret: '',
     refreshTokenSecret: '',
     cookieSecret: '',

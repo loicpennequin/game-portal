@@ -35,11 +35,8 @@ const createTypedContainer = <T extends ContainerDefinition>(
 };
 
 export const createEventContainer = (event: CompatibilityEvent) => {
-  const config = useRuntimeConfig();
-
   return createTypedContainer({
     event: asValue(event),
-    config: asValue(config),
     ...injectables
   });
 };

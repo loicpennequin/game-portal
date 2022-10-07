@@ -8,9 +8,11 @@ export type TrpcRouterMeta = {
   needsAuth?: boolean;
 };
 
-export const createRouter = () => {
-  return trpc
-    .router<Context, TrpcRouterMeta>()
+export const createRouter = ({ middlewares = false } = {}) => {
+  const router = trpc.router<Context, TrpcRouterMeta>();
+
+  if (!middlewares) return router;
+  return router
     .middleware(async ({ path, next }) => {
       trpcLog(`${path}`);
 

@@ -1,0 +1,2 @@
+export const ONE_MINUTE_IN_MS = 1000 * 60;
+export const FIFTEEN_MINUTES_IN_MS = ONE_MINUTE_IN_MS * 15;
