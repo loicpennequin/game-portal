@@ -13,13 +13,16 @@
     "db:sync": "prisma generate & prisma db push",
     "db:ui": "prisma studio",
     "test": "vitest  --config ./vitest.config.ts",
-    "test:watch": "vitest  --config ./vitest.config.ts --watch"
+    "test:watch": "vitest  --config ./vitest.config.ts --watch",
+    "gen:module": "node scripts/generate-module.mjs module"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.1.33",
     "@nuxt/test-utils": "^3.0.0-rc.11",
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "@testing-library/jest-dom": "^5.16.5",
+    "@types/commander": "^2.12.2",
+    "@types/fs-extra": "^9.0.13",
     "@types/http-proxy-middleware": "^1.0.0",
     "@types/lodash-es": "^4.17.6",
     "@types/maildev": "^0.0.3",
@@ -29,6 +32,7 @@
     "@unocss/nuxt": "^0.45.22",
     "@vitejs/plugin-vue": "^3.1.0",
     "@vue/eslint-config-typescript": "^11.0.0",
+    "commander": "^9.4.1",
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-nuxt": "^4.0.0",
@@ -55,6 +59,7 @@
     "@testing-library/vue": "^6.6.1",
     "@trpc/client": "^9.27.4",
     "@trpc/server": "^9.27.4",
+    "@types/node": "^18.8.3",
     "@vueuse/nuxt": "^9.2.0",
     "awilix": "^7.0.3",
     "dedent": "^0.7.0",
