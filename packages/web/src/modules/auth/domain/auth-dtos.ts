@@ -5,7 +5,7 @@ export const emailSigninDto = z.object({
 });
 export type EmailSigninDto = z.infer<typeof emailSigninDto>;
 
-export const tokenSigninDto = z.object({
+export const otpSigninDto = z.object({
   token: z.string()
 });
-export type TokenSigninDto = z.infer<typeof tokenSigninDto>;
+export type OtpSigninDto = z.infer<typeof otpSigninDto>;
