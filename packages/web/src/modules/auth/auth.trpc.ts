@@ -23,4 +23,10 @@ export default createRouter()
     resolve({ ctx }) {
       return ctx.logoutUseCase();
     }
+  })
+  .query('session', {
+    resolve({ ctx }) {
+      // @TODO make use case once we have dto mappers
+      return ctx.event.context.session ?? null;
+    }
   });
