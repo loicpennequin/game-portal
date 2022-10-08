@@ -1,3 +1,3 @@
-import { getCookie, setCookie } from 'h3';
+import { getCookie, setCookie, deleteCookie } from 'h3';
 
-export default () => ({ getCookie, setCookie });
+export default () => ({ getCookie, setCookie, deleteCookie });

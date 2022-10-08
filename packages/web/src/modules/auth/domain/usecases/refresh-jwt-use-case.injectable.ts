@@ -1,10 +1,10 @@
 import { TRPCError } from '@trpc/server';
-import { CompatibilityEvent } from 'h3';
 import { AuthService, CookieService } from '~~/src/generated/injectables';
+import { AuthenticatedEvent } from '~~/src/modules/core/utils/types';
 
 type Injected = {
   authService: AuthService;
-  event: CompatibilityEvent;
+  event: AuthenticatedEvent;
   cookieService: CookieService;
 };
 

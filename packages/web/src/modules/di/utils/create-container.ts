@@ -5,8 +5,8 @@ import {
   ResolveOptions,
   asValue
 } from 'awilix';
-import { CompatibilityEvent } from 'h3';
 import { injectables } from '@/generated/injectables';
+import { AuthenticatedEvent } from '~~/src/modules/core/utils/types';
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;
 
@@ -28,17 +28,17 @@ interface TypedAwilixContainer<T extends ContainerDefinition>
 
 const createTypedContainer = <T extends ContainerDefinition>(
   registrations: T
-): TypedAwilixContainer<T>['cradle'] => {
+): TypedAwilixContainer<T> => {
   const container = createContainer().register(registrations) as any;
 
-  return container.cradle;
+  return container;
 };
 
-export const createEventContainer = (event: CompatibilityEvent) => {
+export const createEventContainer = (event: AuthenticatedEvent) => {
   return createTypedContainer({
     event: asValue(event),
     ...injectables
-  });
+  }).cradle;
 };
 
 export type Container = ReturnType<typeof createEventContainer>;
