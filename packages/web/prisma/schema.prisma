@@ -48,7 +48,7 @@ model Game {
     id           String        @id @default(cuid())
     createdAt    DateTime      @default(now())
     updatedAt    DateTime?     @updatedAt
-    apiKey       String
+    apiKey       String        @unique
     name         String
     author       User          @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     authorId     String

@@ -7,7 +7,7 @@ This project is a monorepo for a game portal application. Users can play and add
 - [@gp/web](packages/web/README.md)
 - [@gp/sdk](packages/sdk/README.md)
 
-Additional packahes will be added later, providing simple example games for the portal
+Additional packages will be added later, providing simple example games for the portal
 
 ## Scripts
 
