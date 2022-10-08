@@ -19,7 +19,7 @@ const getAliases = () => {
 
   return Object.fromEntries(
     Object.entries(tsConfigFormated.compilerOptions.paths).map(
-      ([key, value]) => [key, r(value[0])]
+      ([key, value]) => [key, r((value as any)[0])]
     )
   );
 };

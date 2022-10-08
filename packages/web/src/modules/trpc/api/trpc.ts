@@ -4,6 +4,7 @@ import { createURL } from 'ufo';
 import { isMethod } from 'h3';
 import { createContext } from '../utils/create-context';
 import { router } from '~~/src/generated/trpc-router';
+import { AuthenticatedEvent } from '~~/src/generated/injectables';
 
 export default defineEventHandler(async event => {
   const endpoint = '/api/trpc/';
@@ -19,7 +20,8 @@ export default defineEventHandler(async event => {
       query: $url.searchParams
     },
     path: $url.pathname.substring(endpoint.length),
-    createContext: () => Promise.resolve(createContext(event)),
+    createContext: () =>
+      Promise.resolve(createContext(event as AuthenticatedEvent)),
     onError({ error }) {
       // eslint-disable-next-line no-console
       console.log(chalk.red('[ERROR]'), '-', error.message);
