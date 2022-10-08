@@ -81,6 +81,17 @@ export default ({ db, encryptionService }: Injected) => {
       });
 
       return tokens;
+    },
+
+    logout(userId: string) {
+      return db.user.update({
+        where: {
+          id: userId
+        },
+        data: {
+          refreshToken: null
+        }
+      });
     }
   };
 };

@@ -18,4 +18,9 @@ export default createRouter()
     resolve({ ctx }) {
       return ctx.refreshJwtUseCase();
     }
+  })
+  .mutation('logout', {
+    resolve({ ctx }) {
+      return ctx.logoutUseCase();
+    }
   });
