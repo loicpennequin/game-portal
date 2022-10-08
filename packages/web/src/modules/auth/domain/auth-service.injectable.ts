@@ -51,6 +51,36 @@ export default ({ db, encryptionService }: Injected) => {
       });
 
       return tokens;
+    },
+
+    async refreshJWT(refreshToken: string) {
+      const user = await db.user.findUnique({ where: { refreshToken } });
+      if (!user) {
+        throw new TRPCError({ code: 'UNAUTHORIZED' });
+      }
+
+      try {
+        encryptionService.verifyRefreshToken(refreshToken);
+      } catch {
+        await db.user.update({
+          where: { id: user.id },
+          data: { refreshToken: null }
+        });
+
+        throw new TRPCError({ code: 'UNAUTHORIZED' });
+      }
+
+      const tokens = {
+        accessToken: encryptionService.generateJWT(user.id),
+        refreshToken: encryptionService.generateRefreshToken()
+      };
+
+      await db.user.update({
+        where: { id: user.id },
+        data: { refreshToken: tokens.refreshToken }
+      });
+
+      return tokens;
     }
   };
 };

@@ -1,13 +1,10 @@
-import { setCookie } from 'h3';
+import { getCookie, setCookie } from 'h3';
+import { TRPCError } from '@trpc/server';
 import { createRouter } from '@/modules/trpc/utils/create-router';
 import {
   emailSigninDto,
   tokenSigninDto
 } from '@/modules/auth/domain/auth-dtos';
-import {
-  FIFTEEN_MINUTES_IN_SECONDS,
-  ONE_DAY_IN_SECONDS
-} from '~~/src/utils/time-helpers';
 
 export default createRouter()
   .mutation('emailSignin', {
@@ -33,13 +30,34 @@ export default createRouter()
         await ctx.authService.signInWithOneTimePassword(input.token);
 
       setCookie(ctx.event, 'access-token', accessToken, {
-        maxAge: FIFTEEN_MINUTES_IN_SECONDS,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict'
       });
 
       setCookie(ctx.event, 'refresh-token', refreshToken, {
-        maxAge: ONE_DAY_IN_SECONDS * 7,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        httpOnly: true
+      });
+
+      return { accessToken };
+    }
+  })
+  .mutation('refreshJwt', {
+    async resolve({ ctx }) {
+      const refreshTokenCookie = getCookie(ctx.event, 'refresh-token');
+      if (!refreshTokenCookie) throw new TRPCError({ code: 'UNAUTHORIZED' });
+
+      const { accessToken, refreshToken } = await ctx.authService.refreshJWT(
+        refreshTokenCookie
+      );
+
+      setCookie(ctx.event, 'access-token', accessToken, {
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+      });
+
+      setCookie(ctx.event, 'refresh-token', refreshToken, {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         httpOnly: true

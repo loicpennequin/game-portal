@@ -38,6 +38,10 @@ export default ({ config }: Injected) => {
       return jwt.verify(token, config.jwtSecret);
     },
 
+    verifyRefreshToken(token: string) {
+      return jwt.verify(token, config.refreshTokenSecret);
+    },
+
     generateRefreshToken: () => {
       return jwt.sign(
         { sub: crypto.randomBytes(20).toString('hex') },
