@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import NuxtLink from '#app/components/nuxt-link';
 
-const props = defineProps<{ leftIcon?: string; rightIcon?: string }>();
+const props = defineProps<{
+  leftIcon?: string;
+  rightIcon?: string;
+  isLoading?: boolean;
+}>();
 const attrs = useAttrs();
 
 const is = computed(() => {
@@ -19,7 +23,7 @@ const is = computed(() => {
     no-underline
     whitespace-nowrap
     align-middle
-    p="x-0.75em y-0.5em"
+    p="x-1em y-0.75em"
     flex
     items-center
     gap-2
@@ -32,16 +36,37 @@ const is = computed(() => {
     leading-none
   >
     <span
-      v-if="props.leftIcon"
-      i-ui="discord"
+      v-if="props.leftIcon && !props.isLoading"
+      :i-ui="props.leftIcon"
       block
       aspect-square
       text-lg
       aria-hidden="true"
     />
-    <slot />
+    <span grid items-center>
+      <span
+        col-start="1"
+        col-end="-1"
+        row-start="1"
+        row-end="-1"
+        flex
+        justify-center
+        :class="!isLoading && 'invisible'"
+      >
+        <UiSpinner text-2xl />
+      </span>
+      <span
+        col-start="1"
+        col-end="-1"
+        row-start="1"
+        row-end="-1"
+        :class="isLoading && 'invisible'"
+      >
+        <slot />
+      </span>
+    </span>
     <span
-      v-if="props.rightIcon"
+      v-if="props.rightIcon && !props.isLoading"
       :i-ui="props.rightIcon"
       block
       text-lg

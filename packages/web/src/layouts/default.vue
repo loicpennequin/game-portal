@@ -3,7 +3,7 @@
     <div min-h="screen" grid class="grid-rows-[auto_1fr_auto]">
       <AppHeader />
 
-      <main>
+      <main p-t-5>
         <slot />
       </main>
 

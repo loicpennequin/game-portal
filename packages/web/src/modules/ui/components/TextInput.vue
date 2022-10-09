@@ -47,7 +47,7 @@ const inputHTMLAttrs = computed(
     items-center
     gap="0"
     :bg="props.disabled ? 'light-6 dark:dark-2' : 'light-3 dark:dark-3'"
-    border="solid 1 gray-4/60  dark:dark-9 focus-within:blue-4"
+    border="solid 1 gray-4/60  dark:dark-9 focus-within:sky4"
     rounded
     overflow-hidden
   >

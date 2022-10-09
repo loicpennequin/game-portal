@@ -24,7 +24,7 @@ const attrs = useAttrs();
     flex
     gap="2"
     items-center
-    outline="3 solid transparent focus-within:blue-4"
+    outline="3 solid transparent focus-within:sky4"
     p="1"
     rounded="full"
     text-xs
@@ -46,7 +46,7 @@ const attrs = useAttrs();
       p-x="1"
       relative
       rounded-full
-      un-after="absolute top-0  w-4 h-4 rounded-full bg-dark-2 dark:bg-blue-5  duration-200"
+      un-after="absolute top-0  w-4 h-4 rounded-full bg-dark-2 dark:bg-sky5  duration-200"
       w="10"
     />
     <slot name="on" />
