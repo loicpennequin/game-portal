@@ -5,8 +5,8 @@ import { defineNuxtPlugin, useRequestHeaders } from '#app';
 import { AppRouter } from '~~/src/modules/trpc/utils/types';
 
 export default defineNuxtPlugin(nuxtApp => {
-  const headers = useRequestHeaders();
   const protocol = import.meta.env.DEV ? 'http://' : 'https://';
+  const headers = useRequestHeaders();
   const http = useHttp();
   const url = process.server
     ? `${protocol}${headers.host}/api/trpc`
@@ -28,8 +28,8 @@ export default defineNuxtPlugin(nuxtApp => {
     // use Nuxt native implementation of $fetch instead of standard fetch
     // this allows us to call directly the functions instead of making an API call when the app is server-rendered
     // We need to tweak the error handling a bit so the TRPC errors are formatted correctly
-    fetch: (input, options) =>
-      http
+    fetch: (input, options) => {
+      return http
         .raw(input.toString(), options)
         .catch(e => {
           if (e instanceof FetchError && e.response) return e.response;
@@ -39,7 +39,8 @@ export default defineNuxtPlugin(nuxtApp => {
         .then(response => ({
           ...response,
           json: () => Promise.resolve(response._data)
-        }))
+        }));
+    }
   });
   nuxtApp.provide('client', client);
 });

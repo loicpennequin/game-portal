@@ -17,7 +17,8 @@ export default defineNuxtConfig({
     'nuxt-typed-router',
     '@vueuse/nuxt',
     '@nuxtjs/color-mode',
-    '@unocss/nuxt'
+    '@unocss/nuxt',
+    '@pinia/nuxt'
   ],
 
   runtimeConfig: {

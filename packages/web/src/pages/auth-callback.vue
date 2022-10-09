@@ -1,10 +1,13 @@
 <script setup lang="ts">
 const route = useRoute();
 const { router, routes } = useTypedRouter();
+const jwtStore = useJwtStore();
+
 const { mutate, isSuccess, error } = useTrpcMutation(
   'auth.oneTimePasswordSignin',
   {
-    onSuccess() {
+    onSuccess(data) {
+      jwtStore.jwt = data.accessToken;
       router.push({ name: routes.index });
     }
   }

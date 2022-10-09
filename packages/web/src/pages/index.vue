@@ -1,6 +1,10 @@
 <script setup lang="ts">
 const { data: session, refetch, suspense } = useTrpcQuery(['auth.session']);
-onServerPrefetch(suspense);
+onServerPrefetch(async () => {
+  try {
+    await suspense();
+  } catch {}
+});
 
 const email = ref('');
 const {

@@ -22,11 +22,11 @@ export default defineEventHandler(async event => {
     path: $url.pathname.substring(endpoint.length),
     createContext: () =>
       Promise.resolve(createContext(event as AuthenticatedEvent)),
-    onError({ error }) {
+    onError({ error, input }) {
       // eslint-disable-next-line no-console
-      console.log(chalk.red('[ERROR]'), '-', error.message);
+      console.log(chalk.red('[ERROR]'), '-', input, '-', error.message);
       // eslint-disable-next-line no-console
-      console.error(error.cause);
+      // console.error(error.cause);
     }
   });
 

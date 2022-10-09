@@ -7,7 +7,7 @@
 
 ## Stack reference
 
-### Gloval
+### Global
 
 - Framework: [Nuxt 3](https://v3.nuxtjs.org/)
 - Real time communication: not implemented, depends on serverless hosting or not

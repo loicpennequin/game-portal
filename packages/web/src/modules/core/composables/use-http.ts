@@ -14,6 +14,7 @@ export const useGlobalInterceptors = () => ({
 
 export const useHttp = () => {
   return $fetch.create({
+    retry: 0,
     async onRequest(ctx) {
       for (const cb of requestInterceptors.values()) {
         await cb?.(ctx);
