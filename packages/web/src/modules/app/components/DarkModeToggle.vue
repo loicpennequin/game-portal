@@ -23,15 +23,15 @@ const isDarkMode = computed({
     aria-label="dark mode"
   >
     <template #off>
-      <div fill="dark:white" i-mdi-white-balance-sunny />
+      <div fill="dark:white" i-ui-sun />
     </template>
-    <template #on><div fill="dark:white" i-mdi-weather-night /></template>
+    <template #on><div fill="dark:white" i-ui-moon /></template>
   </UiSwitchInput>
 </template>
 
 <style>
 body.color-mode--animating,
 body.color-mode--animating * {
-  --at-apply: 'transition-colors duration-200';
+  transition: all 200ms;
 }
 </style>
