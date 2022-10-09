@@ -9,10 +9,6 @@ generator client {
     previewFeatures = ["referentialIntegrity"]
 }
 
-model Thing {
-    id String @id @unique @default(cuid())
-}
-
 model User {
     id                     String           @id @unique @default(cuid())
     createdAt              DateTime         @default(now())

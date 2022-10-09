@@ -5,8 +5,7 @@ import {
   ResolveOptions,
   asValue
 } from 'awilix';
-import { injectables } from '@/generated/injectables';
-import { AuthenticatedEvent } from '~~/src/modules/core/utils/types';
+import { injectables, AuthenticatedEvent } from '@/generated/injectables';
 
 type ContainerDefinition = Record<string, Resolver<unknown>>;
 
