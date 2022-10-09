@@ -3,7 +3,7 @@ const route = useRoute();
 const { router, routes } = useTypedRouter();
 const jwtStore = useJwtStore();
 
-const { mutate, isSuccess, error } = useTrpcMutation(
+const { mutate: otpSignIn, error: otpError } = useTrpcMutation(
   'auth.oneTimePasswordSignin',
   {
     onSuccess(data) {
@@ -13,9 +13,23 @@ const { mutate, isSuccess, error } = useTrpcMutation(
   }
 );
 
+const { mutate: discordSignIn, error: discordError } = useTrpcMutation(
+  'auth.discordSignin',
+  {
+    onSuccess(data) {
+      jwtStore.jwt = data.accessToken;
+      router.push({ name: routes.index });
+    }
+  }
+);
+
+const error = computed(() => otpError.value || discordError.value);
+
 onMounted(() => {
   if (route.query.token && typeof route.query.token === 'string') {
-    mutate({ token: route.query.token });
+    otpSignIn({ token: route.query.token });
+  } else if (route.query.code && typeof route.query.code === 'string') {
+    discordSignIn({ code: route.query.code });
   }
 });
 </script>
@@ -23,7 +37,7 @@ onMounted(() => {
 <template>
   <div>
     <div v-if="error" color-red-6>{{ error }}</div>
-    <div v-else-if="isSuccess" colof-green-6>You're logged in</div>
+
     <div v-else>Authenticating you...</div>
   </div>
 </template>

@@ -53,6 +53,22 @@ export default ({ db, encryptionService }: Injected) => {
       return tokens;
     },
 
+    async signInWithDiscordId(discordId: string) {
+      const user = await db.user.findUnique({ where: { discordId } });
+      if (!user) throw new TRPCError({ code: 'NOT_FOUND' });
+
+      const tokens = {
+        accessToken: encryptionService.generateJWT(user.id),
+        refreshToken: encryptionService.generateRefreshToken()
+      };
+
+      await db.user.update({
+        where: { discordId },
+        data: { refreshToken: tokens.refreshToken }
+      });
+      return tokens;
+    },
+
     async refreshJWT(refreshToken: string) {
       const user = await db.user.findUnique({ where: { refreshToken } });
       if (!user) {

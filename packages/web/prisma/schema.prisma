@@ -16,7 +16,7 @@ model User {
     email                  String           @unique
     oneTimePassword        String?
     refreshToken           String?          @unique @db.VarChar(200)
-    discordId              String?
+    discordId              String?          @unique
     username               String?
     games                  Game[]
     gameSessions           GameSession[]

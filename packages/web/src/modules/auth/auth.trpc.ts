@@ -1,5 +1,9 @@
 import { createRouter } from '@/modules/trpc/utils/create-router';
-import { emailSigninDto, otpSigninDto } from '@/modules/auth/domain/auth-dtos';
+import {
+  discordSigninDto,
+  emailSigninDto,
+  otpSigninDto
+} from '@/modules/auth/domain/auth-dtos';
 
 export default createRouter()
   .mutation('emailSignin', {
@@ -12,6 +16,12 @@ export default createRouter()
     input: otpSigninDto,
     resolve({ ctx, input }) {
       return ctx.otpSigninUseCase(input);
+    }
+  })
+  .mutation('discordSignin', {
+    input: discordSigninDto,
+    resolve({ ctx, input }) {
+      return ctx.discordSigninUseCase(input.code);
     }
   })
   .mutation('refreshJwt', {

@@ -25,7 +25,13 @@ export default defineNuxtConfig({
     appUrl: '',
     jwtSecret: '',
     refreshTokenSecret: '',
-    sendgridApiKey: ''
+    discordClientId: '',
+    discordClientSecret: '',
+    discordRedirectUri: '',
+    sendgridApiKey: '',
+    public: {
+      discordAuthorizeUrl: ''
+    }
   },
 
   trpc: {

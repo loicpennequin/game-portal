@@ -9,3 +9,8 @@ export const otpSigninDto = z.object({
   token: z.string()
 });
 export type OtpSigninDto = z.infer<typeof otpSigninDto>;
+
+export const discordSigninDto = z.object({
+  code: z.string()
+});
+export type DiscordSigninDto = z.infer<typeof discordSigninDto>;
