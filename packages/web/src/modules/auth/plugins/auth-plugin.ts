@@ -10,7 +10,11 @@ type JwtPayload = {
   exp: number;
 };
 
-const EXCLUDED_URLS = ['/api/trpc/auth.refreshJwt'] as const;
+type RefreshEndpointRawResponse = {
+  result: { data: { accessToken: string } };
+};
+
+const REFRESH_ENDPOINT = '/api/trpc/auth.refreshJwt';
 
 export default defineNuxtPlugin(nuxt => {
   const { request } = useGlobalInterceptors();
@@ -18,7 +22,9 @@ export default defineNuxtPlugin(nuxt => {
   const headers = useRequestHeaders();
   const trpcClient = useClient();
   const jwtStore = useJwtStore();
+
   let ongoingRefreshPromise: Maybe<Promise<void>>;
+
   const getCookieUniversal = (name: string) => {
     return nuxt.ssrContext
       ? getCookie(nuxt.ssrContext.event, name)
@@ -34,74 +40,74 @@ export default defineNuxtPlugin(nuxt => {
     ctx.options.headers.authorization = `Bearer ${jwtStore.jwt}`;
   };
 
+  const checkJwtExpiration = (jwt: string) => {
+    const { exp } = jwtDecode<JwtPayload>(jwt);
+    const now = new Date();
+    const expirationDate = new Date(exp * 1000); // exp is in seconds
+    return now.getTime() > expirationDate.getTime();
+  };
+
+  // https://v3.nuxtjs.org/getting-started/data-fetching/#example-pass-cookies-from-server-side-api-calls-on-ssr-response
+  const applySSRCookies = (headers: Headers) => {
+    if (!nuxt.ssrContext) {
+      console.warn('Cannot apply SSR cookies client side');
+      return;
+    }
+
+    const cookies = headers.get('set-cookie');
+    if (!cookies) return;
+
+    for (const cookie of cookies.split(',')) {
+      appendHeader(nuxt.ssrContext.event, 'set-cookie', cookie);
+    }
+  };
+
+  const refreshJwtSSR = async (ctx: FetchContext) => {
+    try {
+      // using .raw() to have access to response headers
+      const res = await http.raw<RefreshEndpointRawResponse>(REFRESH_ENDPOINT, {
+        method: 'POST',
+        headers: headers as any // types are whack
+      });
+
+      jwtStore.jwt = res._data?.result.data.accessToken;
+      setAuthorizationHeader(ctx);
+      applySSRCookies(res.headers);
+    } catch (err: unknown) {
+      if (err instanceof FetchError && err.response) {
+        applySSRCookies(err.response.headers);
+      }
+    }
+  };
+
+  const refreshJwtIfNeeded = async (ctx: FetchContext) => {
+    const accessToken = getCookieUniversal('access-token');
+    if (!accessToken) return;
+
+    const isExpired = checkJwtExpiration(accessToken);
+    if (!isExpired) return;
+
+    if (nuxt.ssrContext) {
+      await refreshJwtSSR(ctx);
+    } else {
+      await trpcClient.mutation('auth.refreshJwt');
+    }
+
+    ongoingRefreshPromise = null;
+  };
+
   request.add(ctx => {
     setAuthorizationHeader(ctx);
     return Promise.resolve();
   });
 
   request.add(ctx => {
-    console.log(
-      'HTTP REQUEST',
-      ctx.request.toString(),
-      !!ongoingRefreshPromise
-    );
+    if (ctx.request.toString() === REFRESH_ENDPOINT) return Promise.resolve();
 
-    const isExcluded = EXCLUDED_URLS.some(url =>
-      ctx.request.toString().startsWith(url)
-    );
-    if (isExcluded) return Promise.resolve();
+    if (!ongoingRefreshPromise) {
+      ongoingRefreshPromise = refreshJwtIfNeeded(ctx);
+    }
 
-    return (
-      ongoingRefreshPromise ??
-      (ongoingRefreshPromise = (async () => {
-        const accessToken = getCookieUniversal('access-token');
-        if (!accessToken) return;
-
-        const { exp } = jwtDecode<JwtPayload>(accessToken);
-        const now = new Date();
-        const expirationDate = new Date(exp * 1000); // exp is in seconds
-        const isExpired = now.getTime() > expirationDate.getTime();
-
-        if (!isExpired) return;
-        console.log('jwt expired, will refresh', ctx.request.toString());
-
-        if (nuxt.ssrContext) {
-          // https://v3.nuxtjs.org/getting-started/data-fetching/#example-pass-cookies-from-server-side-api-calls-on-ssr-response
-          const applySSRCookies = (headers: Headers) => {
-            console.log(
-              'applying SSR cookies',
-              ctx.request.toString(),
-              !!nuxt.ssrContext
-            );
-            const cookies = headers.get('set-cookie');
-            if (!cookies) return;
-            for (const cookie of cookies.split(',')) {
-              appendHeader(nuxt.ssrContext!.event, 'set-cookie', cookie);
-            }
-          };
-
-          try {
-            console.log('calling refresh endpoint');
-            const res = await http.raw('/api/trpc/auth.refreshJwt', {
-              method: 'POST',
-              headers: headers as any,
-              retry: false
-            });
-
-            jwtStore.jwt = (res._data as any).result.data.accessToken;
-            setAuthorizationHeader(ctx);
-
-            applySSRCookies(res.headers);
-          } catch (err: any) {
-            if (err instanceof FetchError && err.response) {
-              applySSRCookies(err.response.headers);
-            }
-          }
-        } else {
-          await trpcClient.mutation('auth.refreshJwt');
-        }
-        ongoingRefreshPromise = null;
-      })())
-    );
+    return ongoingRefreshPromise;
   });
 });

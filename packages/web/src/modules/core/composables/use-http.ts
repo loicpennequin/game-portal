@@ -20,7 +20,7 @@ export const useHttp = () => {
     useGlobalInterceptors();
 
   return $fetch.create({
-    retry: 0,
+    retry: false,
     async onRequest(ctx) {
       for (const cb of request.values()) {
         await cb?.(ctx);

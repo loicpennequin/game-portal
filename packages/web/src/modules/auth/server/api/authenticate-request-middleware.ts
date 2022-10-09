@@ -17,17 +17,6 @@ const normalizeRequestHeaders = (headers: any) => {
 };
 
 export default defineEventHandler(async event => {
-  if (event.req.url === '/') {
-    console.log(
-      '=========================================================================='
-    );
-    console.log(
-      '======================NEW PAGE LOAD======================================='
-    );
-    console.log(
-      '=========================================================================='
-    );
-  }
   if (!event.req.url?.startsWith('/api')) return;
 
   const isExcluded = EXCLUDED_URLS.some(url => event.req.url?.startsWith(url));

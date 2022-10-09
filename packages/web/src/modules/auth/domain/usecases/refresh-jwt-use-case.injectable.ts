@@ -12,7 +12,6 @@ export default ({ authService, cookieService, event }: Injected) =>
   async () => {
     const refreshTokenCookie = getCookie(event, 'refresh-token');
     if (!refreshTokenCookie) {
-      console.log('no refresh token cookie');
       throw new TRPCError({ code: 'UNAUTHORIZED' });
     }
 

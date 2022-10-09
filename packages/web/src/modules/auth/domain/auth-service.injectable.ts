@@ -56,7 +56,6 @@ export default ({ db, encryptionService }: Injected) => {
     async refreshJWT(refreshToken: string) {
       const user = await db.user.findUnique({ where: { refreshToken } });
       if (!user) {
-        console.log('no user found for refresh token', refreshToken);
         throw new TRPCError({ code: 'UNAUTHORIZED' });
       }
 
@@ -68,7 +67,6 @@ export default ({ db, encryptionService }: Injected) => {
           data: { refreshToken: null }
         });
 
-        console.log('error while verifying refresh token');
         throw new TRPCError({ code: 'UNAUTHORIZED' });
       }
 

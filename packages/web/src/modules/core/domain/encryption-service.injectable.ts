@@ -30,8 +30,7 @@ export default ({ config }: Injected) => {
 
     generateJWT: (userId: string) => {
       return jwt.sign({ sub: userId }, config.jwtSecret, {
-        // expiresIn: FIFTEEN_MINUTES_IN_SECONDS
-        expiresIn: 15
+        expiresIn: FIFTEEN_MINUTES_IN_SECONDS
       });
     },
 
@@ -44,7 +43,6 @@ export default ({ config }: Injected) => {
     },
 
     generateRefreshToken: () => {
-      console.log('generating new refresh token');
       return jwt.sign(
         { sub: crypto.randomBytes(20).toString('hex') },
         config.refreshTokenSecret,
