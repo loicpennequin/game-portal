@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- [NodeJS >= 16.0](https://nodejs.org/en/)
+- [NodeJS = 16.x](https://nodejs.org/en/)
 - [Docker and docker-compose](https://docs.docker.com/get-docker/)
 
 ## Stack reference
