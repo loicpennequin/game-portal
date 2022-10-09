@@ -35,9 +35,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <div v-if="error" color-red-6>{{ error }}</div>
-
-    <div v-else>Authenticating you...</div>
+  <div h-full grid place-content-center gap-3>
+    <UiSpinner text-7xl m-x-auto />
+    <p v-if="error" color="red-6 dark:red-2" text-lg font-bold>{{ error }}</p>
+    <p v-else text-lg>Signing you in...</p>
   </div>
 </template>
