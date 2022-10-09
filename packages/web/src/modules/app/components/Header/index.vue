@@ -42,10 +42,10 @@ onMounted(() => {
     :class="isCollapsed && '-translate-y-full'"
     @focusin="isCollapsed = false"
   >
-    <UiContainer grid grid-cols="2 md:3" gap-4 p="y-3 x-5">
-      <h1>Game Portal</h1>
+    <UiContainer flex justify-between gap-4 p="y-3 x-5">
+      <h1 font-bold text-xl>Game Portal</h1>
 
-      <div>Header nav</div>
+      <AppDarkModeToggle />
     </UiContainer>
   </UiSurface>
 </template>

@@ -4,6 +4,7 @@
   "scripts": {
     "prebuild": "vue-tsc --noEmit",
     "build": "nuxt build",
+    "predev": "yarn db:sync",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

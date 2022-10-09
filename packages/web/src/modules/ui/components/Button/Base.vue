@@ -42,7 +42,7 @@ const is = computed(() => {
       v-if="props.rightIcon"
       m-l="2"
       :m-r="-1"
-      i-mdi-code-braces
+      :i="props.rightIcon"
       block
       w-1em
       aspect-square

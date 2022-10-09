@@ -5,7 +5,6 @@ import presetAttributify from '@unocss/preset-attributify';
 import { presetUno } from '@unocss/preset-uno';
 import { presetIcons } from '@unocss/preset-icons';
 import presetWebFonts from '@unocss/preset-web-fonts';
-import unoPreset from './src/modules/ui/uno-preset';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -47,6 +46,7 @@ export default defineNuxtConfig({
   unocss: {
     preflight: true,
 
+    safelist: ['[i~="carbon-logo-discord"]'],
     presets: [
       presetAttributify(),
       presetUno(),
@@ -55,8 +55,7 @@ export default defineNuxtConfig({
         fonts: {
           sans: 'Roboto'
         }
-      }),
-      unoPreset()
+      })
     ]
   },
 

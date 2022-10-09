@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import type { Component } from 'vue';
-import DButtonFull from './DButtonFull.vue';
-import DButtonOutlined from './DButtonOutlined.vue';
-import DButtonGhost from './DButtonGhost.vue';
-import DButtonLight from './DButtonLight.vue';
+import ButtonFull from './Full.vue';
+import ButtonOutlined from './Outlined.vue';
+import ButtonGhost from './Ghost.vue';
 import { ButtonVariant } from '~~/src/modules/ui/utils/types';
 
 type Props = {
@@ -15,10 +14,9 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const variantMap = new Map<ButtonVariant, Component>([
-  ['full', DButtonFull],
-  ['outlined', DButtonOutlined],
-  ['ghost', DButtonGhost],
-  ['light', DButtonLight]
+  ['full', ButtonFull],
+  ['outlined', ButtonOutlined],
+  ['ghost', ButtonGhost]
 ]);
 
 const buttonGroup = useButtonGroup();

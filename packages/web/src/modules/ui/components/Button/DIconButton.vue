@@ -7,12 +7,12 @@ const props = withDefaults(defineProps<{ variant?: ButtonVariant }>(), {
 </script>
 
 <template>
-  <DButton
+  <UiButton
     :variant="props.variant"
     p="0"
     un-children="h-full block aspect-square"
     rounded="1/2"
   >
     <slot />
-  </DButton>
+  </UiButton>
 </template>

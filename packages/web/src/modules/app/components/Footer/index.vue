@@ -29,7 +29,7 @@ const { routes } = useTypedRouter();
         </NuxtLink>
       </div>
       <div grow="1 md:0">
-        © 2022 Daria aka "CEO of based", All rights reserved.
+        © 2022 Daria aka "CEO of based", All rights reserved or you go to gulag.
       </div>
     </UiContainer>
   </UiSurface>

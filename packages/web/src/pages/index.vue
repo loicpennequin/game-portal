@@ -36,12 +36,12 @@ const isDiscordEnabled = computed(
 </script>
 
 <template>
-  <div space-y-5 p-3>
+  <UiSurface space-y-5>
     <div v-if="session">
       <h1 text-xl inline-block m-r-3>
         Hello, {{ session.username ?? 'there' }} !
       </h1>
-      <button bg-blue-3 p="x-3 y-1" @click="signOff(null)">Sign off</button>
+      <UiButton @click="signOff(null)">Sign off</UiButton>
 
       <template v-if="!session.username">
         <p>It seems you haven't chosen a username yet</p>
@@ -56,7 +56,7 @@ const isDiscordEnabled = computed(
             Username
             <input v-model="username" p-1 border="1 solid gray-4" />
           </label>
-          <button bg-blue-3 p-3>Set your username</button>
+          <UiButton>Set your username</UiButton>
         </form>
       </template>
     </div>
@@ -73,7 +73,7 @@ const isDiscordEnabled = computed(
           E-mail
           <input v-model="email" type="email" p-1 border="1 solid gray-4" />
         </label>
-        <button bg-blue-3 p-3>Sign in with email</button>
+        <UiButton bg-blue-3 p-3>Sign in with email</UiButton>
         <p v-if="isSuccess" color-green-7>
           Go
           <code p-1 color-gray-8 bg-gray-3>/maildev</code>
@@ -83,20 +83,15 @@ const isDiscordEnabled = computed(
       </form>
 
       <div>Or</div>
-      <a
+      <UiButton
         :href="runtimeConfig.public.discordAuthorizeUrl"
-        p-3
-        bg="#5865F2"
-        color-white
-        flex
-        items-center
-        gap-2
+        bg="#5865F2 hover:#404ddb focus-visible:#222eba"
         w-max
-        :opacity="!isDiscordEnabled && '50'"
+        :disabled="!isDiscordEnabled"
+        left-icon="carbon-logo-discord"
       >
-        <span i-carbon:logo-discord text-xl />
         Login with Discord
-      </a>
+      </UiButton>
 
       <template v-if="!isDiscordEnabled">
         <p>
@@ -121,5 +116,5 @@ const isDiscordEnabled = computed(
         </ul>
       </template>
     </template>
-  </div>
+  </UiSurface>
 </template>
