@@ -45,6 +45,7 @@ onMounted(() => {
     <UiContainer flex justify-between gap-4 p="y-3 x-5">
       <h1 font-bold text-xl>Game Portal</h1>
 
+      <NuxtLink to="/games">Games</NuxtLink>
       <AppDarkModeToggle />
     </UiContainer>
   </UiSurface>
