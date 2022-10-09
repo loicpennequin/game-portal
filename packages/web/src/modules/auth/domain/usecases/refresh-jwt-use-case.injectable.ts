@@ -16,11 +16,11 @@ export default ({ authService, cookieService, event }: Injected) =>
       throw new TRPCError({ code: 'UNAUTHORIZED' });
     }
 
-    const { accessToken, refreshToken } = await authService.refreshJWT(
-      refreshTokenCookie
-    );
-
     try {
+      const { accessToken, refreshToken } = await authService.refreshJWT(
+        refreshTokenCookie
+      );
+
       cookieService.setCookie(event, 'access-token', accessToken, {
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict'
