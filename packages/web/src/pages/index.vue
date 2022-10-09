@@ -71,7 +71,7 @@ const isDiscordEnabled = computed(
       >
         <label flex flex-col>
           E-mail
-          <input v-model="email" type="email" p-1 border="1 solid gray-4" />
+          <UiTextInput v-model="email" id="signin-email" type="email" />
         </label>
         <UiButton bg-blue-3 p-3>Sign in with email</UiButton>
         <p v-if="isSuccess" color-green-7>
@@ -88,7 +88,7 @@ const isDiscordEnabled = computed(
         bg="#5865F2 hover:#404ddb focus-visible:#222eba"
         w-max
         :disabled="!isDiscordEnabled"
-        left-icon="carbon-logo-discord"
+        left-icon="discord"
       >
         Login with Discord
       </UiButton>

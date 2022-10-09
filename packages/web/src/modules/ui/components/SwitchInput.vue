@@ -24,7 +24,7 @@ const attrs = useAttrs();
     flex
     gap="2"
     items-center
-    outline="3 solid transparent focus-within:context-300"
+    outline="3 solid transparent focus-within:blue-4"
     p="1"
     rounded="full"
     text-xs

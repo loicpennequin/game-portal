@@ -1,12 +1,11 @@
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
+import { FileSystemIconLoader } from '@iconify/utils/lib/loader/node-loaders';
 import fs from 'fs-extra';
-import presetAttributify from '@unocss/preset-attributify';
-import { presetUno } from '@unocss/preset-uno';
-import { presetIcons } from '@unocss/preset-icons';
-import presetWebFonts from '@unocss/preset-web-fonts';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const ICONS_DIR = resolve(__dirname, 'src/assets/icons');
 
 const MODULES_PATH = resolve(__dirname, 'src/modules');
 const modules = fs
@@ -45,17 +44,24 @@ export default defineNuxtConfig({
 
   unocss: {
     preflight: true,
-
-    safelist: ['[i~="carbon-logo-discord"]'],
-    presets: [
-      presetAttributify(),
-      presetUno(),
-      presetIcons(),
-      presetWebFonts({
-        fonts: {
-          sans: 'Roboto'
-        }
-      })
+    attributify: true,
+    icons: {
+      collections: {
+        ui: FileSystemIconLoader(ICONS_DIR, svg => {
+          return svg.replace('<svg ', '<svg fill="currentColor" ');
+        })
+      }
+    },
+    webFonts: {
+      fonts: {
+        sans: 'Roboto'
+      }
+    },
+    safelist: [
+      ...fs
+        .readdirSync(ICONS_DIR)
+        .map(fileName => fileName.replace('.svg', ''))
+        .map(icon => `[i-ui~="${icon}"]`)
     ]
   },
 

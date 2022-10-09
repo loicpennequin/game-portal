@@ -31,10 +31,10 @@ const is = computed(() => {
       v-if="props.leftIcon"
       m-r="2"
       :m-l="-1"
-      :i="props.leftIcon"
+      i-ui="discord"
       block
-      w-1em
       aspect-square
+      text-2xl
       aria-hidden="true"
     />
     <slot />
@@ -42,9 +42,9 @@ const is = computed(() => {
       v-if="props.rightIcon"
       m-l="2"
       :m-r="-1"
-      :i="props.rightIcon"
+      :i-ui="props.rightIcon"
       block
-      w-1em
+      text-2xl
       aspect-square
       aria-hidden="true"
     />

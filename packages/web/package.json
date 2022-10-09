@@ -21,8 +21,6 @@
     "db:ui": "prisma studio"
   },
   "devDependencies": {
-    "@iconify-json/carbon": "^1.1.8",
-    "@iconify-json/mdi": "^1.1.33",
     "@nuxt/test-utils": "^3.0.0-rc.11",
     "@nuxtjs/eslint-config-typescript": "^11.0.0",
     "@testing-library/jest-dom": "^5.16.5",
