@@ -4,7 +4,7 @@ This project is a monorepo for a game portal application. Users can play and add
 
 ## Prerequisites
 
-- [NodeJS >= 16.0](https://nodejs.org/en/)
+- [NodeJS = 16.x](https://nodejs.org/en/)
 - [Docker and docker-compose](https://docs.docker.com/get-docker/)
 
 ## Packages
