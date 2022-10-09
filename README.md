@@ -2,6 +2,11 @@
 
 This project is a monorepo for a game portal application. Users can play and add their own games to the platform by integrating them through a provided SDK.
 
+## Prerequisites
+
+- [NodeJS >= 16.0](https://nodejs.org/en/)
+- [Docker and docker-compose](https://docs.docker.com/get-docker/)
+
 ## Packages
 
 - [@gp/web](packages/web/README.md)
