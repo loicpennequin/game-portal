@@ -1,5 +1,7 @@
 <script setup lang="ts">
 const { data: session, refetch, suspense } = useTrpcQuery(['auth.session']);
+const jwtStore = useJwtStore();
+
 onServerPrefetch(async () => {
   try {
     await suspense();
@@ -22,6 +24,7 @@ const { mutate: setUsername } = useTrpcMutation('user.onboarding', {
 
 const { mutate: signOff } = useTrpcMutation('auth.logout', {
   onSuccess() {
+    jwtStore.jwt = null;
     refetch();
   }
 });

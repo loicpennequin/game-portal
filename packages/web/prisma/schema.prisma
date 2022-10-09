@@ -46,6 +46,7 @@ model Game {
     updatedAt    DateTime?     @updatedAt
     apiKey       String        @unique
     name         String
+    description  String?
     author       User          @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     authorId     String
     gameSessions GameSession[]
