@@ -24,7 +24,7 @@ export const createRouter = ({ middlewares = false } = {}) => {
       return result;
     })
     .middleware(({ meta, next, ctx }) => {
-      if (meta?.needsAuth && !ctx.event.context.user) {
+      if (meta?.needsAuth && !ctx.event.context.session) {
         throw new TRPCError({ code: 'UNAUTHORIZED' });
       }
       return next();

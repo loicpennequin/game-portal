@@ -26,7 +26,7 @@ export default defineEventHandler(async event => {
       // eslint-disable-next-line no-console
       console.log(chalk.red('[ERROR]'), '-', path, '-', error.message);
       // eslint-disable-next-line no-console
-      // console.error(error.cause);
+      console.error(error.cause);
     }
   });
 
