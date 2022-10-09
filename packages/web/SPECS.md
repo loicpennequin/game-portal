@@ -19,14 +19,14 @@
          **WHEN** that I clicked on the link from the sign-in email  
          **GIVEN** this is the first time I sign in  
          **THEN** I should be prompted to fill out an onboarding form with a username field
-- [x] Sign-in via Discord
-      **AS** a user  
+- [x] Sign-in via Discord  
+       **AS** a user  
        **WHEN** that click the Discord sign in button  
-       **THEN** I should be redirected back to the home page, signed in
-      **THEN** My username should already be filled out and an onboarding form should **NOT** be displayed
+       **THEN** I should be redirected back to the home page, signed in  
+       **THEN** My username should already be filled out and an onboarding form should **NOT** be displayed
 - [ ] Sign-off  
-       **AS** an user
-      **GIVEN** I am authenticated
-      **WHEN** I click the sign off button
-      **THEN** I should not be signed in anymore
-      **THEN** The UI should reflect the fact that I am not signed in
+       **AS** an user  
+       **GIVEN** I am authenticated  
+       **WHEN** I click the sign off button  
+       **THEN** I should not be signed in anymore  
+       **THEN** The UI should reflect the fact that I am not signed in
