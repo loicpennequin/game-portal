@@ -3,9 +3,9 @@
     <div min-h="screen" grid class="grid-rows-[auto_1fr_auto]">
       <AppHeader />
 
-      <UiContainer>
+      <main>
         <slot />
-      </UiContainer>
+      </main>
 
       <AppFooter />
     </div>

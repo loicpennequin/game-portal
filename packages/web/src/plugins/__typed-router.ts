@@ -7,7 +7,11 @@
 import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin(nuxtApp => {
-  const routesList = { authCallback: 'auth-callback', index: 'index' };
+  const routesList = {
+    authCallback: 'auth-callback',
+    index: 'index',
+    login: 'login'
+  };
 
   return {
     provide: {

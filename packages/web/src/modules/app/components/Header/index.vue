@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { throttle } from 'lodash-es';
-// import ConnectedMenu from './ConnectedMenu.vue';
-// import DisconnectedMenu from './DisconnectedMenu.vue';
 
-// const currentUser = useCurrentUser();
+const { data: session, suspense } = useTrpcQuery(['auth.session']);
 
-// const menuComponent = computed(() =>
-//   currentUser.value ? ConnectedMenu : DisconnectedMenu
-// );
+onServerPrefetch(async () => {
+  try {
+    await suspense();
+  } catch {}
+});
 
 const isCollapsed = ref(false);
 const COLLAPSE_SCROLL_THRESHOLD = 100;
@@ -48,7 +48,8 @@ const { routes } = useTypedRouter();
         Game Portal
       </NuxtLink>
 
-      <AppDarkModeToggle />
+      <AppHeaderAuthenticatedMenu v-if="session" />
+      <AppHeaderUnauthenticatedMenu v-else />
     </UiContainer>
   </UiSurface>
 </template>
