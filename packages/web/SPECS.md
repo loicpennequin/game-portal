@@ -10,8 +10,8 @@
          **GIVEN** that I am not authenticated  
          **WHEN** I sign in with email  
          **THEN** I recieve an email containing a link to login the application
-  - [x] Authenticating from email
-        **AS** a user  
+  - [x] Authenticating from email  
+         **AS** a user  
          **WHEN** that I clicked on the link from the sign-in email  
          **THEN** I should land on the home page, signed in
   - [x] Authenticating from email for the first time  
