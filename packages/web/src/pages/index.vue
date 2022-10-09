@@ -13,6 +13,13 @@ const {
   error
 } = useTrpcMutation('auth.emailSignin');
 
+const username = ref('');
+const { mutate: setUsername } = useTrpcMutation('user.onboarding', {
+  onSuccess() {
+    refetch();
+  }
+});
+
 const { mutate: signOff } = useTrpcMutation('auth.logout', {
   onSuccess() {
     refetch();
@@ -23,8 +30,27 @@ const { mutate: signOff } = useTrpcMutation('auth.logout', {
 <template>
   <div space-y-5>
     <div v-if="session">
-      Hello, {{ session.email }}
-      <button bg-blue-3 p-3 @click="signOff(null)">Sign off</button>
+      <h1 text-xl inline-block m-r-3>
+        Hello, {{ session.username ?? 'there' }} !
+      </h1>
+      <button bg-blue-3 p="x-3 y-1" @click="signOff(null)">Sign off</button>
+
+      <template v-if="!session.username">
+        <p>It seems you haven't chosen a username yet</p>
+        <form
+          gap-2
+          flex
+          flex-col
+          items-start
+          @submit.prevent="setUsername({ username })"
+        >
+          <label>
+            Username
+            <input v-model="username" p-1 border="1 solid gray-4" />
+          </label>
+          <button bg-blue-3 p-3>Set your username</button>
+        </form>
+      </template>
     </div>
 
     <form
