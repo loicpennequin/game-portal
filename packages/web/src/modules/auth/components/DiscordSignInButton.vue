@@ -21,6 +21,6 @@ const isWarningDisplayed = computed(
     bg="#5865F2 hover:#424dbd focus-visible:#3f48a6"
     left-icon="discord"
   >
-    Login with Discord
+    Sign in with Discord
   </UiButton>
 </template>
