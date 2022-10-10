@@ -13,7 +13,7 @@ const { mutate: signOff } = useTrpcMutation('auth.logout', {
 
 <template>
   <nav>
-    <ul>
+    <ul flex items-center gap-3>
       <li>
         <UiButton variant="ghost" :to="{ name: routes.games }">Games</UiButton>
       </li>
