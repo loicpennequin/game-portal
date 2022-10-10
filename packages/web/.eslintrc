@@ -27,6 +27,7 @@
     ],
 
     "vue/no-multiple-template-root": "off",
+    "vue/no-v-model-argument": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error", { "typedefs": false }],
     "@typescript-eslint/no-explicit-any": "off",

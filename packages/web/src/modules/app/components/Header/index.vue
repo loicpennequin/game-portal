@@ -43,7 +43,7 @@ const { routes } = useTypedRouter();
     :class="isCollapsed && '-translate-y-full'"
     @focusin="isCollapsed = false"
   >
-    <UiContainer flex justify-between gap-4 p="y-3 x-5">
+    <UiContainer flex justify-between items-center gap-4 p="y-3 x-5">
       <NuxtLink :to="{ name: routes.index }" font-bold text-xl>
         Game Portal
       </NuxtLink>

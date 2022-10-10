@@ -16,6 +16,7 @@ useHead({
 });
 </script>
 <template>
+  <UserOnboardingModal />
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

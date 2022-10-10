@@ -1,5 +1,7 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ as?: string }>(), {
+import { HtmlTag } from '~~/src/utils/types';
+
+const props = withDefaults(defineProps<{ as?: HtmlTag }>(), {
   as: 'div'
 });
 </script>
