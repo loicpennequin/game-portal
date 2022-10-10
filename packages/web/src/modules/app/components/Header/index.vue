@@ -8,6 +8,7 @@ import { throttle } from 'lodash-es';
 // const menuComponent = computed(() =>
 //   currentUser.value ? ConnectedMenu : DisconnectedMenu
 // );
+const { routes } = useTypedRouter();
 
 const isCollapsed = ref(false);
 const COLLAPSE_SCROLL_THRESHOLD = 100;
@@ -45,7 +46,7 @@ onMounted(() => {
     <UiContainer flex justify-between gap-4 p="y-3 x-5">
       <h1 font-bold text-xl>Game Portal</h1>
 
-      <NuxtLink to="/games">Games</NuxtLink>
+      <NuxtLink :to="{ name: routes.games }">Games</NuxtLink>
       <AppDarkModeToggle />
     </UiContainer>
   </UiSurface>
