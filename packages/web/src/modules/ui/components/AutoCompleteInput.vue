@@ -53,7 +53,7 @@ const filteredOptions = computed(() =>
       :id="props.id"
       :name="props.name"
       :bg="$attrs.disabled ? 'light-6 dark:dark-2' : 'light-3 dark:dark-3'"
-      border="solid 1 gray-4/60  dark:dark-9 focus-within:brand-4"
+      border="solid 1 focus-within:2 gray-4/60  dark:dark-9 focus-within:sky-5"
       rounded
       bg-inherit
       color-inherit

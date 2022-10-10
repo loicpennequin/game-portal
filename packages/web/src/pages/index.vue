@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const urls = ref<string[]>([]);
 
+// file input
 const { readAsDataURL } = useFileReader();
-
 const vModel = computed<any>({
   get: () => [],
   set: async (val: Blob[]) => {
@@ -10,9 +10,9 @@ const vModel = computed<any>({
   }
 });
 
+// stepper
 const currentStep = ref(0);
 const selectedStep = ref(0);
-
 const next = () => {
   currentStep.value++;
 
@@ -21,8 +21,8 @@ const next = () => {
   });
 };
 
+// autocomplete
 const options = ['Orange', 'Banana', 'Strawberry', 'Apple', 'Grapes', 'Kiwi'];
-
 const emojiByFruitName = {
   Orange: '🍊',
   Banana: '🍌',
@@ -31,8 +31,12 @@ const emojiByFruitName = {
   Grapes: '🍇',
   Kiwi: '🥝'
 };
-
 const selectedOption = ref<string>('');
+
+// textarea
+const text = ref(
+  'Some text\nwith multiple lines\nanother one\nand another one'
+);
 </script>
 
 <template>
@@ -61,19 +65,19 @@ const selectedOption = ref<string>('');
         :current-step="currentStep"
       >
         <UiStepperStep label="Step One">
-          <UiSurface>
+          <UiSurface shadow-lg>
             Step 1 tab
             <UiButton @click="next()">Enable Step 2</UiButton>
           </UiSurface>
         </UiStepperStep>
         <UiStepperStep label="Step Two">
-          <UiSurface>
+          <UiSurface shadow-lg>
             Step 2 tab
             <UiButton @click="next()">Enable Step 3</UiButton>
           </UiSurface>
         </UiStepperStep>
         <UiStepperStep label="Step Three">
-          <UiSurface>Step 3 tab</UiSurface>
+          <UiSurface shadow-lg>Step 3 tab</UiSurface>
         </UiStepperStep>
       </UiStepper>
     </UiSurface>
@@ -92,6 +96,11 @@ const selectedOption = ref<string>('');
           {{ option }}
         </template>
       </UiAutoCompleteInput>
+    </UiSurface>
+
+    <UiSurface space-y-5>
+      <h2 text-xl>Test autoresize textarea</h2>
+      <UiTextArea v-model="text" />
     </UiSurface>
   </UiContainer>
 </template>
