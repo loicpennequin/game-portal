@@ -5,9 +5,9 @@ import fs from 'fs-extra';
 import dedent from 'dedent';
 import chalk from 'chalk';
 import fg from 'fast-glob';
-import { camelCase, startCase } from 'lodash-es';
+import { camelCase, debounce, startCase } from 'lodash-es';
 
-export const generateInjectables = async () => {
+export const generateInjectables = debounce(async () => {
   const injectables = (await fg('**/*.injectable.ts')).map(path => ({
     name: camelCase(path.split('/').at(-1)?.replace('.injectable.ts', '')),
     importPath: path.replace('src', '@').replace('.ts', '')
@@ -57,4 +57,4 @@ export const generateInjectables = async () => {
   );
 
   console.log(chalk.green('[  DI  ]'), ' - Injectables generated.');
-};
+}, 1000);

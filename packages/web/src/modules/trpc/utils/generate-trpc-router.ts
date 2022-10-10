@@ -1,11 +1,12 @@
 import { resolve } from 'path';
 import { format, resolveConfig } from 'prettier';
 import fg from 'fast-glob';
+import { debounce } from 'lodash-es';
 import fs from 'fs-extra';
 import dedent from 'dedent';
 import { trpcLog } from './create-logger';
 
-export const generateTrpcRouter = async () => {
+export const generateTrpcRouter = debounce(async () => {
   const routers = (await fg('**/*.trpc.ts')).map(path => ({
     name: path.slice(path.lastIndexOf('/') + 1).replace('.trpc.ts', ''),
     importPath: path.replace('src', '@').replace('.ts', '')
@@ -43,4 +44,4 @@ export const generateTrpcRouter = async () => {
   );
 
   trpcLog('TRPC Router generated');
-};
+}, 1000);
