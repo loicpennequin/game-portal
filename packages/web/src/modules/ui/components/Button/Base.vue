@@ -32,7 +32,7 @@ const is = computed(() => {
     rounded
     border="solid 1 transparent"
     outline="focus:none"
-    ring="transparent focus-visible:brand-4 2"
+    ring="transparent focus-visible:sky-4 2"
     leading-none
   >
     <span

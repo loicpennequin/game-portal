@@ -1,7 +1,7 @@
 <template>
   <UiButtonBase
-    bg="disabled:transparent transparent hover:context-6/10 dark:hover:context-5/10"
-    color="disabled:gray-4 context-6 dark:context-5"
+    bg="disabled:transparent transparent hover:dark-6/10 dark:hover:blue-4/10"
+    color="disabled:gray-4 dark-1 dark:blue-4"
     border="solid 1 current"
   >
     <slot />
