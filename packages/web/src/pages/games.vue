@@ -1,6 +1,4 @@
 <script setup lang="ts">
-const { data: session } = useTrpcQuery(['auth.session']);
-
 enum Types {
   All,
   Multiplayer
@@ -21,27 +19,29 @@ const gameTypes = [
 </script>
 
 <template>
-  <UiSurface space-y-5>
-    <div v-if="session">
+  <UiContainer>
+    <UiSurface space-y-5>
       <h1 text-xl inline-block m-r-3 mb-4>Browse for Games</h1>
 
       <section flex>
-        <aside px-10>
-          <ul>
-            <li
-              v-for="gameType in gameTypes"
-              :key="gameType.title"
-              my-4
-              cursor-pointer
-              :color="selectedType === gameType.type ? 'red-400' : ''"
-              @click="selectedType = gameType.type"
-            >
-              {{ gameType.title }}
+        <aside b-r="solid 1 gray-4 dark:gray-6" p-x-10>
+          <ul space-y-1>
+            <li v-for="gameType in gameTypes" :key="gameType.title">
+              <UiButton
+                w-full
+                variant="ghost"
+                :color="selectedType === gameType.type ? 'red-400' : ''"
+                @click="selectedType = gameType.type"
+              >
+                {{ gameType.title }}
+              </UiButton>
             </li>
           </ul>
         </aside>
-        <section>YAY SOME GAMES</section>
+        <UiSurface as="section">
+          <section>YAY SOME GAMES</section>
+        </UiSurface>
       </section>
-    </div>
-  </UiSurface>
+    </UiSurface>
+  </UiContainer>
 </template>

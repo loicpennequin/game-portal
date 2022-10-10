@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div min-h="screen" grid class="grid-rows-[auto_1fr_auto]">
+    <div min-h="screen" grid grid-rows="[auto_1fr_auto]">
       <AppHeader />
 
       <main p-t-5>

@@ -20,7 +20,7 @@ const isSubmitted = ref(false);
       </div>
       <template v-if="!isSubmitted">
         <AuthEmailSignInForm max-w="xs" @success="isSubmitted = true" />
-        <div>Or</div>
+        <div>- OR -</div>
         <AuthDiscordSignInButton w-full max-w="xs" />
       </template>
 
