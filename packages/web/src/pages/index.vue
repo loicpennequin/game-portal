@@ -37,11 +37,17 @@ const selectedOption = ref<string>('');
 const text = ref(
   'Some text\nwith multiple lines\nanother one\nand another one'
 );
+
+// link
+const { routes } = useTypedRouter();
+
+// toast
+const { showSuccess, showInfo, showError, showWarning } = useToast();
 </script>
 
 <template>
   <UiContainer max-w="screen-md" space-y-8>
-    <UiSurface space-y-5>
+    <UiSurface space-y-5 as="section">
       <h1 text-3xl>Game Portal</h1>
 
       <h2 text-xl>Test file input</h2>
@@ -57,7 +63,7 @@ const text = ref(
         />
       </div>
     </UiSurface>
-    <UiSurface space-y-5>
+    <UiSurface space-y-5 as="section">
       <h2 text-xl>Test stepper</h2>
 
       <UiStepper
@@ -82,7 +88,7 @@ const text = ref(
       </UiStepper>
     </UiSurface>
 
-    <UiSurface space-y-5>
+    <UiSurface space-y-5 as="section">
       <h2 text-xl>Test autocomplete input</h2>
 
       <code block>selected option: {{ selectedOption }}</code>
@@ -98,9 +104,65 @@ const text = ref(
       </UiAutoCompleteInput>
     </UiSurface>
 
-    <UiSurface space-y-5>
+    <UiSurface space-y-5 as="section">
       <h2 text-xl>Test autoresize textarea</h2>
       <UiTextArea v-model="text" />
+    </UiSurface>
+
+    <UiSurface space-y-5 as="section">
+      <h2 text-xl>Test typed Link</h2>
+      <UiLink :to="{ name: routes.games }">Browse games</UiLink>
+    </UiSurface>
+
+    <UiSurface space-y-5 as="section">
+      <h2 text-xl>Test toast</h2>
+
+      <div flex gap-3>
+        <UiButton
+          variant="ghost"
+          @click="
+            showInfo({
+              title: 'I am a toast',
+              text: 'some additional text'
+            })
+          "
+        >
+          Send info toast
+        </UiButton>
+        <UiButton
+          variant="ghost"
+          @click="
+            showSuccess({
+              title: 'I am a toast',
+              text: 'some additional text'
+            })
+          "
+        >
+          Send success toast
+        </UiButton>
+        <UiButton
+          variant="ghost"
+          @click="
+            showWarning({
+              title: 'I am a toast',
+              text: 'some additional text'
+            })
+          "
+        >
+          Send warning toast
+        </UiButton>
+        <UiButton
+          variant="ghost"
+          @click="
+            showError({
+              title: 'I am a toast',
+              text: 'some additional text'
+            })
+          "
+        >
+          Send error toast
+        </UiButton>
+      </div>
     </UiSurface>
   </UiContainer>
 </template>
