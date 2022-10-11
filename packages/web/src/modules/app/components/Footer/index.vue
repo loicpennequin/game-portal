@@ -3,7 +3,7 @@ const { routes } = useTypedRouter();
 </script>
 
 <template>
-  <UiSurface is="footer" p="3">
+  <UiSurface as="footer" p="3">
     <UiContainer flex justify-between flex-wrap>
       <div flex gap-5 flex-wrap text="children:center">
         <NuxtLink

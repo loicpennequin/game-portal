@@ -28,7 +28,7 @@ watch(vModel, () => {
     <textarea
       v-model="vModel"
       bg="light-2 dark:dark-3"
-      border="solid 1 gray-4/60  dark:dark-9 focus-within:sky-4 focus-within:2"
+      border="solid 1 gray-4/60  dark:dark-9 focus-within:sky-4"
       :style="{ minHeight: inputSize }"
       v-bind="$attrs"
       p="x-3 y-2"

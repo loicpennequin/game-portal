@@ -53,7 +53,7 @@ const filteredOptions = computed(() =>
       :id="props.id"
       :name="props.name"
       :bg="$attrs.disabled ? 'light-6 dark:dark-2' : 'light-3 dark:dark-3'"
-      border="solid 1 focus-within:2 gray-4/60  dark:dark-9 focus-within:sky-5"
+      border="solid 1 gray-4/60  dark:dark-9 focus-within:sky-5"
       rounded
       bg-inherit
       color-inherit
@@ -85,7 +85,7 @@ const filteredOptions = computed(() =>
         >
           <li
             p="x-3 y-1"
-            :bg="active || selected ? 'sky-5 ' : 'hover:brand-5'"
+            :bg="active || selected ? 'sky-5 ' : 'hover:sky-5'"
             :color="active || selected ? 'white' : 'hover:white'"
             :font="(active || selected) && 'bold'"
             cursor-default
@@ -104,7 +104,7 @@ const filteredOptions = computed(() =>
         >
           <li
             p="x-3 y-1"
-            :bg="active || selected ? 'brand-5' : 'hover:brand-5'"
+            :bg="active || selected ? 'sky-5' : 'hover:sky-5'"
             :color="active || selected ? 'white' : 'hover:white'"
             :font="(active || selected) && 'bold'"
             cursor-default

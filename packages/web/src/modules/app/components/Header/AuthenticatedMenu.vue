@@ -2,6 +2,7 @@
 const { routes } = useTypedRouter();
 const qc = useQueryClient();
 
+const { data: session } = useTrpcQuery(['auth.session']);
 const jwtStore = useJwtStore();
 const { mutate: signOff } = useTrpcMutation('auth.logout', {
   onSuccess() {
@@ -9,6 +10,8 @@ const { mutate: signOff } = useTrpcMutation('auth.logout', {
     qc.setQueryData(['auth.session'], null);
   }
 });
+
+const isDropdownOpened = ref(false);
 </script>
 
 <template>
@@ -18,11 +21,37 @@ const { mutate: signOff } = useTrpcMutation('auth.logout', {
         <UiButton variant="ghost" :to="{ name: routes.games }">Games</UiButton>
       </li>
       <li>
-        <UiButton variant="ghost" right-icon="power-off" @click="signOff(null)">
-          Sign off
-        </UiButton>
+        <UiDropdown v-model:is-opened="isDropdownOpened">
+          <template #toggle="{ on }">
+            <UserAvatar
+              as="button"
+              title="user menu"
+              outline="focus:none"
+              cursor-pointer
+              ring="transparent focus-visible:sky-4 2"
+              :user="session"
+              h="10"
+              v-on="on"
+            />
+          </template>
+
+          <template #menu>
+            <UiDropdownItem icon="brush">
+              Toggle dark mode
+              <AppDarkModeToggle />
+            </UiDropdownItem>
+
+            <UiDropdownItem
+              icon="power-off"
+              close-on-click
+              cursor-pointer
+              @click="signOff(null)"
+            >
+              Sign off
+            </UiDropdownItem>
+          </template>
+        </UiDropdown>
       </li>
-      <li><AppDarkModeToggle /></li>
     </ul>
   </nav>
 </template>

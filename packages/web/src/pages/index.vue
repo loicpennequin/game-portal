@@ -43,13 +43,16 @@ const { routes } = useTypedRouter();
 
 // toast
 const { showSuccess, showInfo, showError, showWarning } = useToast();
+
+// dropdown
+const isDropdownOpened = ref(false);
 </script>
 
 <template>
   <UiContainer max-w="screen-md" space-y-8>
-    <UiSurface space-y-5 as="section">
-      <h1 text-3xl>Game Portal</h1>
+    <h1 text-3xl>Game Portal</h1>
 
+    <UiSurface space-y-5 as="section">
       <h2 text-xl>Test file input</h2>
       <UiFileInput v-model="vModel" id="my-file-input" accept="image/*" />
       <div flex gap-3>
@@ -63,6 +66,7 @@ const { showSuccess, showInfo, showError, showWarning } = useToast();
         />
       </div>
     </UiSurface>
+
     <UiSurface space-y-5 as="section">
       <h2 text-xl>Test stepper</h2>
 
@@ -163,6 +167,20 @@ const { showSuccess, showInfo, showError, showWarning } = useToast();
           Send error toast
         </UiButton>
       </div>
+    </UiSurface>
+
+    <UiSurface space-y-5 as="section">
+      <h2 text-xl>Test dropdown</h2>
+      <UiDropdown
+        v-model:is-opened="isDropdownOpened"
+        toggle-label="My dropdown"
+      >
+        <template #menu>
+          <UiDropdownItem icon="warning-sign">Dropdown item 1</UiDropdownItem>
+          <UiDropdownItem icon="close">Dropdown item 2</UiDropdownItem>
+          <UiDropdownItem icon="settings">Dropdown item 3</UiDropdownItem>
+        </template>
+      </UiDropdown>
     </UiSurface>
   </UiContainer>
 </template>
