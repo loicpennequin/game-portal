@@ -3,7 +3,6 @@ const api = useDropdown();
 
 const { menuNode, isOpened, placement } = api;
 const translateClass = computed(() => {
-  console.log(placement);
   if (placement.includes('top')) return 'translate-y-5';
   if (placement.includes('bottom')) return '-translate-y-5';
   if (placement.includes('left')) return 'translate-x-5';

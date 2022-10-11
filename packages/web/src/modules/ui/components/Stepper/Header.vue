@@ -7,11 +7,11 @@ const { tabs, currentStep, selectedIndex } = useStepper();
 const tab = computed(() => tabs.value[props.index]);
 const isDisabled = computed(() => props.index > currentStep.value);
 
-const lineColor = computed(() =>
-  props.index > selectedIndex.value
-    ? 'gray-2 after:black dark:after:white'
-    : 'gray-2 after:sky-5 dark:after:sky-4'
-);
+// const lineColor = computed(() =>
+//   props.index > selectedIndex.value
+//     ? 'gray-2 after:black dark:after:white'
+//     : 'gray-2 after:sky-5 dark:after:sky-4'
+// );
 const markerColor = computed(() =>
   isDisabled.value
     ? 'inherit'
@@ -29,7 +29,7 @@ const markerBg = computed(() =>
 </script>
 
 <template>
-  <div
+  <!-- <div
     h="3px"
     :bg="lineColor"
     un-first="hidden"
@@ -38,7 +38,7 @@ const markerBg = computed(() =>
     class="line"
     un-after="absolute inset-0  transition-transform duration-400 origin-left"
     :scale-x="isDisabled && 'after:0'"
-  />
+  /> -->
 
   <Tab
     as="button"
@@ -53,6 +53,7 @@ const markerBg = computed(() =>
     rounded
     outline="focus:none"
     ring="transparent focus-visible:blue-4 2"
+    bg="white dark:dark-2"
   >
     <span
       rounded-full

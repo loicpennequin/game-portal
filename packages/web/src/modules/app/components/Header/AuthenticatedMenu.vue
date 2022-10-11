@@ -21,14 +21,14 @@ const isDropdownOpened = ref(false);
         <UiButton variant="ghost" :to="{ name: routes.games }">Games</UiButton>
       </li>
       <li>
-        <UiDropdown v-model:is-opened="isDropdownOpened">
+        <UiDropdown v-model:is-opened="isDropdownOpened" placement="bottom-end">
           <template #toggle="{ on }">
             <UserAvatar
               as="button"
               title="user menu"
               outline="focus:none"
               cursor-pointer
-              ring="transparent focus-visible:sky-4 2"
+              ring="transparent focus-visible:sky-4 3"
               :user="session"
               h="10"
               v-on="on"
