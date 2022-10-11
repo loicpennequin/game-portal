@@ -90,7 +90,8 @@ export default defineNuxtPlugin(nuxt => {
     if (nuxt.ssrContext) {
       await refreshJwtSSR(ctx);
     } else {
-      await trpcClient.mutation('auth.refreshJwt');
+      const { accessToken } = await trpcClient.mutation('auth.refreshJwt');
+      jwtStore.jwt = accessToken;
     }
 
     ongoingRefreshPromise = null;
