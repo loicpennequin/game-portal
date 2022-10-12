@@ -9,6 +9,7 @@ import { defineNuxtPlugin } from '#app';
 export default defineNuxtPlugin(nuxtApp => {
   const routesList = {
     authCallback: 'auth-callback',
+    gameId: 'game-id',
     games: 'games',
     index: 'index',
     login: 'login'

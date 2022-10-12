@@ -16,5 +16,4 @@ export default defineNuxtPlugin(async nuxt => {
       presets: [attributify(), uno()]
     }
   });
-  console.log('runtime loaded');
 });

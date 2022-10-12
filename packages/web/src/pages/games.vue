@@ -24,6 +24,8 @@ const gameTypes = [
     type: Types.Multiplayer
   }
 ];
+
+const { routes } = useTypedRouter();
 </script>
 
 <template>
@@ -48,7 +50,13 @@ const gameTypes = [
         </aside>
         <UiSurface as="section">
           <AppQueryLoader v-slot="{ data }" :query="games">
-            There are currently {{ data.length }} games
+            <ul>
+              <li v-for="game in data" :key="game.id">
+                <UiLink :to="{ name: routes.gameId, params: { id: game.id } }">
+                  {{ game.name }}
+                </UiLink>
+              </li>
+            </ul>
           </AppQueryLoader>
         </UiSurface>
       </section>

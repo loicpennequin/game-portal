@@ -94,11 +94,13 @@ export const createPageLoader = <T extends TrpcKeyDictionary>(
 
           const { ssrPrefetch } = queryDef(route, resolvedData);
           if (ssrPrefetch) {
-            onServerPrefetch(() => {
+            onServerPrefetch(async () => {
               if (query.fetchStatus.value === 'idle') {
                 return getDependentSSRPromise();
               }
-              return query.suspense();
+              try {
+                await query.suspense();
+              } catch {}
             });
           }
 

@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "web": "yarn workspace @gp/web",
-    "sdk": "yarn workspace @gp/sdk"
+    "sdk": "yarn workspace @gp/sdk",
+    "test-game": "yarn workspace @gp/test-game"
   },
   "workspaces": {
     "packages": [
