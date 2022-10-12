@@ -7,12 +7,12 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-  <NuxtLink
+  <AppLink
     :to="props.to"
     color="sky-6 dark:sky-3 hover:sky-7 dark:hover:sky-2"
     underline
     prefetch
   >
     <slot />
-  </NuxtLink>
+  </AppLink>
 </template>

@@ -3,5 +3,6 @@
   "compilerOptions": {
     "strict": true,
     "types": ["@testing-library/jest-dom"]
-  }
+  },
+  "vueCompilerOptions.jsxTemplates": true
 }

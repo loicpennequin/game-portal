@@ -1,5 +1,10 @@
 import { TRPCClientError } from '@trpc/client';
-import { UseQueryOptions } from '@tanstack/vue-query';
+import { Ref } from 'vue';
+import {
+  QueryKey,
+  UseQueryOptions,
+  UseQueryReturnType
+} from '@tanstack/vue-query';
 import {
   TrpcQueryPath,
   InferQueryOutput,
@@ -7,6 +12,19 @@ import {
   PathAndInput
 } from '~~/src/modules/trpc/utils/types';
 import { MaybeRef } from '~~/src/utils/types';
+
+declare module '@tanstack/vue-query' {
+  function useQuery<
+    TQueryFnData = unknown,
+    TError = unknown,
+    TData = TQueryFnData,
+    TQueryKey extends QueryKey = QueryKey
+  >(
+    options:
+      | UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>
+      | Ref<UseQueryOptions<TQueryFnData, TError, TData, TQueryKey>>
+  ): UseQueryReturnType<TData, TError>;
+}
 
 export type TrpcQueryOptions<TPath extends TrpcQueryPath> = UseQueryOptions<
   InferQueryOutput<TPath>,

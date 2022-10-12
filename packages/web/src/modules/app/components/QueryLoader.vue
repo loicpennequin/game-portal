@@ -1,26 +1,24 @@
-<script setup lang="ts">
-const props = defineProps<{ query: ReturnType<typeof useTrpcQuery> }>();
+<script lang="ts">
+import { ComponentPublicInstance, VNode } from 'vue';
+import QueryLoaderBase from './QueryLoaderBase.vue';
 
-// eslint-disable-next-line vue/no-setup-props-destructure
-const { isLoading, error, data, isSuccess } = props.query;
-const isEmpty = computed(
-  () =>
-    (isSuccess.value && !data) ||
-    (Array.isArray(data.value) && data.value.length === 0)
-);
+interface Props<T extends ReturnType<typeof useTrpcQuery>> {
+  query: T;
+}
+
+type AssertDefined<T> = Exclude<T, undefined>;
+
+type QueryLoader = new <T extends ReturnType<typeof useTrpcQuery>>(
+  props: Props<T>
+) => ComponentPublicInstance & {
+  $props: Props<T>;
+  $slots: {
+    default: ({ data }: { data: AssertDefined<T['data']['value']> }) => VNode[];
+    loading: (...args: any[]) => VNode[];
+    error: (...args: any[]) => VNode[];
+    empty: (...args: any[]) => VNode[];
+  };
+};
+
+export default QueryLoaderBase as QueryLoader;
 </script>
-
-<template>
-  <slot v-if="isLoading" name="loading">
-    <UiCenter><UiSpinner text-6xl /></UiCenter>
-  </slot>
-  <slot v-else-if="error" name="error" :error="error">
-    <div color-red-5 m-y-5>{{ error }}</div>
-  </slot>
-
-  <slot v-else-if="isEmpty" name="empty"><div>Empty</div></slot>
-
-  <slot v-else-if="data" :data="data"></slot>
-</template>
-
-<style scoped></style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import NuxtLink from '#app/components/nuxt-link';
+import AppLink from '@/modules/app/components/Link.vue';
 
 const props = defineProps<{
   leftIcon?: string;
@@ -9,7 +9,7 @@ const props = defineProps<{
 const attrs = useAttrs();
 
 const is = computed(() => {
-  if (attrs.to) return NuxtLink;
+  if (attrs.to) return AppLink;
   if (attrs.href) return 'a';
   return 'button';
 });

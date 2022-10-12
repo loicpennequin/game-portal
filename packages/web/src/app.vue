@@ -14,6 +14,8 @@ useHead({
       'bg-light-7 dark:bg-dark-3 color-black dark:color-white font-sans min-h-screen cs-blue'
   }
 });
+
+usePagePreloader();
 </script>
 <template>
   <NuxtLayout>

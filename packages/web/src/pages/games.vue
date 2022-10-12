@@ -1,4 +1,12 @@
 <script setup lang="ts">
+import { gameListLoader } from '~~/src/modules/game/loaders/game-list-loader';
+
+definePageMeta({
+  loader: gameListLoader
+});
+
+const { games } = gameListLoader.load();
+
 enum Types {
   All,
   Multiplayer
@@ -39,7 +47,9 @@ const gameTypes = [
           </ul>
         </aside>
         <UiSurface as="section">
-          <section>YAY SOME GAMES</section>
+          <AppQueryLoader v-slot="{ data }" :query="games">
+            There are currently {{ data.length }} games
+          </AppQueryLoader>
         </UiSurface>
       </section>
     </UiSurface>
