@@ -15,7 +15,7 @@ const { mutate, isLoading, error } = useTrpcMutation('user.onboarding', {
 
 <template>
   <UiModal v-model:is-opened="isOpened" :closable="false">
-    <UiModalBackdrop />
+    <UiBackdrop />
 
     <UiModalContent p="3" text-center max-w="max">
       <h2 font-bold text-3xl>Almost done !</h2>

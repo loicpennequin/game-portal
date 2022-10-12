@@ -46,6 +46,12 @@ const { showSuccess, showInfo, showError, showWarning } = useToast();
 
 // dropdown
 const isDropdownOpened = ref(false);
+
+// modal
+const isModalOpened = ref(false);
+
+// drawer
+const isDrawerOpened = ref(false);
 </script>
 
 <template>
@@ -181,6 +187,63 @@ const isDropdownOpened = ref(false);
           <UiDropdownItem icon="settings">Dropdown item 3</UiDropdownItem>
         </template>
       </UiDropdown>
+    </UiSurface>
+
+    <UiSurface space-y-5 as="section">
+      <h2 text-xl>Test modal and drawer</h2>
+
+      <UiButton @click="isModalOpened = true">Open modal</UiButton>
+      <UiButton @click="isDrawerOpened = true">Open drawer</UiButton>
+
+      <UiModal v-model:is-opened="isModalOpened" title="My modal">
+        <UiBackdrop />
+        <UiModalContent>I am a modal !</UiModalContent>
+      </UiModal>
+
+      <UiDrawer v-model:is-opened="isDrawerOpened" title="My drawer">
+        <UiBackdrop />
+        <UiDrawerContent>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <p m-y-10>
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque
+            maiores hic incidunt excepturi, ab laborum nostrum eaque accusantium
+            inventore. Illo cumque veritatis inventore voluptatibus quidem sit
+            nesciunt pariatur itaque neque.
+          </p>
+          <template #footer>
+            <div p-3>Use the footer slot to add a sticky footer</div>
+          </template>
+        </UiDrawerContent>
+      </UiDrawer>
     </UiSurface>
   </UiContainer>
 </template>

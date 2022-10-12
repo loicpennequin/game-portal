@@ -37,7 +37,7 @@ const { routes } = useTypedRouter();
     p="0"
     sticky
     top-0
-    z-1
+    z-10
     transition-transform
     duration-300
     :class="isCollapsed && '-translate-y-full'"

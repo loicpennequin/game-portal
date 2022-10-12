@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { TransitionChild, DialogPanel } from '@headlessui/vue';
 
-const modal = useModal();
-const { title } = modal;
-const slotProps = useSlotProps(modal);
+const drawer = useModal();
+const { title } = drawer;
+const slotProps = useSlotProps(drawer);
+
 const slots = useSlots();
 </script>
 
@@ -12,26 +13,25 @@ const slots = useSlots();
     as="template"
     appear
     enter="duration-300 ease-out"
-    enter-from="-translate-y-10 opacity-0"
-    enter-to="-translate-y-0"
+    enter-from="-translate-x-full"
+    enter-to="-translate-x-0"
     leave="duration-200 ease-in"
-    leave-from="-translate-y-0"
-    leave-to="-translate-y-0 opacity-0"
+    leave-from="-translate-x-0"
+    leave-to="-translate-x-full"
   >
     <DialogPanel
       as="div"
+      transition-transform
       w="full"
-      max-w="screen-md"
-      w-full
+      max-w="md"
       transform
       transition-all
-      self-start
+      min-h-full
       overflow-y-auto
-      m-t="20"
     >
-      <UiSurface max-h="3/4" flex flex-col>
+      <UiSurface min-h-full flex flex-col p="x-4 y-0">
         <slot name="header" v-bind="slotProps">
-          <UiModalHeader v-if="title" />
+          <UiDrawerHeader v-if="title" />
         </slot>
 
         <div flex-1 p-x-4>

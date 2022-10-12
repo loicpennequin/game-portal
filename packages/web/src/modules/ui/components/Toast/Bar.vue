@@ -3,7 +3,17 @@ const { toasts, clear } = useToast();
 </script>
 
 <template>
-  <div fixed z-10 bottom-10 w-full flex flex-col gap-5 items-center>
+  <div
+    fixed
+    z-10
+    bottom-10
+    left="1/2"
+    translate-x="-1/2"
+    flex
+    flex-col
+    gap-5
+    items-center
+  >
     <transition-group
       move-class="transition-all duration-300"
       enter-active-class="transition-all duration-300"

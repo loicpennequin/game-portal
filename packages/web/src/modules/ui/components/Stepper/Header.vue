@@ -29,17 +29,6 @@ const markerBg = computed(() =>
 </script>
 
 <template>
-  <!-- <div
-    h="3px"
-    :bg="lineColor"
-    un-first="hidden"
-    self-center
-    relative
-    class="line"
-    un-after="absolute inset-0  transition-transform duration-400 origin-left"
-    :scale-x="isDisabled && 'after:0'"
-  /> -->
-
   <Tab
     as="button"
     type="button"
@@ -69,7 +58,7 @@ const markerBg = computed(() =>
       transition="colors"
       self
       duration="200"
-      delay-400
+      delay-200
       :bg="markerBg"
       :color="markerColor"
     >
