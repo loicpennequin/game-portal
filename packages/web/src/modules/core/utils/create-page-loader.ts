@@ -156,8 +156,8 @@ export const createPageLoader = <T extends TrpcKeyDictionary>(
 
         function preloadQuery(name: keyof T, { key, queryOptions }: any) {
           const resolvedQueryOptions = {
-            cacheTime: queryOptions.cacheTime,
-            staleTime: queryOptions.staleTime || 30_000
+            cacheTime: queryOptions?.cacheTime,
+            staleTime: queryOptions?.staleTime || 30_000
           };
 
           queryClient

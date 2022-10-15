@@ -12,10 +12,9 @@ const { game } = gameDetailLoader.load();
   <UiContainer>
     <UiSurface>
       <AppQueryLoader v-slot="{ data }" :query="game">
-        <h1>{{ data.name }}</h1>
+        <h1 text-3xl font-bold>{{ data.name }}</h1>
         <p>by {{ data.author.username }}</p>
-
-        <iframe :src="data.url" w-full h-screen border="solid 1 black" />
+        <pre>{{ data }}</pre>
       </AppQueryLoader>
     </UiSurface>
   </UiContainer>

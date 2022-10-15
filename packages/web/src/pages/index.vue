@@ -1,7 +1,6 @@
 <script setup lang="ts">
-const urls = ref<string[]>([]);
-
 // file input
+const urls = ref<string[]>([]);
 const { readAsDataURL } = useFileReader();
 const vModel = computed<any>({
   get: () => [],
@@ -102,16 +101,19 @@ const isDrawerOpened = ref(false);
       <h2 text-xl>Test autocomplete input</h2>
 
       <code block>selected option: {{ selectedOption }}</code>
-      <UiAutoCompleteInput
-        v-model="selectedOption"
-        id="autocomplete"
-        :options="options"
-      >
-        <template #option="{ option }">
-          {{ emojiByFruitName[option as keyof typeof emojiByFruitName] }}
-          {{ option }}
-        </template>
-      </UiAutoCompleteInput>
+      <fieldset>
+        <label for="autocomplete">Select a fruit</label>
+        <UiAutoCompleteInput
+          v-model="selectedOption"
+          id="autocomplete"
+          :options="options"
+        >
+          <template #option="{ option }">
+            {{ emojiByFruitName[option as keyof typeof emojiByFruitName] }}
+            {{ option }}
+          </template>
+        </UiAutoCompleteInput>
+      </fieldset>
     </UiSurface>
 
     <UiSurface space-y-5 as="section">
