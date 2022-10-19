@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data: session, refetch } = useTrpcQuery(['auth.session']);
+const { data: session, refetch } = useSession();
 
 const isOpened = computed(() =>
   session.value ? !session.value.username : false
@@ -8,6 +8,7 @@ const isOpened = computed(() =>
 const username = ref('');
 const { mutate, isLoading, error } = useTrpcMutation('user.onboarding', {
   onSuccess() {
+    // @ts-ignore typed are wrong, query.refetch is NOT a ref
     refetch();
   }
 });

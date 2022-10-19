@@ -2,8 +2,9 @@
 const { routes } = useTypedRouter();
 const qc = useQueryClient();
 
-const { data: session } = useTrpcQuery(['auth.session']);
+const { data: session } = useSession();
 const jwtStore = useJwtStore();
+
 const { mutate: signOff } = useTrpcMutation('auth.logout', {
   onSuccess() {
     jwtStore.jwt = null;

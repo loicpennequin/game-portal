@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { throttle } from 'lodash-es';
 
-const { data: session, suspense } = useTrpcQuery(['auth.session']);
-
-onServerPrefetch(async () => {
-  try {
-    await suspense();
-  } catch {}
-});
+const { data: session } = useSession();
 
 const isCollapsed = ref(false);
 const COLLAPSE_SCROLL_THRESHOLD = 100;
