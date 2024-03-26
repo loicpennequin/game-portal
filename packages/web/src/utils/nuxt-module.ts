@@ -1,7 +1,7 @@
 import { addComponentsDir, addImportsDir, addPlugin } from '@nuxt/kit';
 import { Nuxt } from '@nuxt/schema';
 import fs from 'fs-extra';
-import { resolve } from 'pathe';
+import { relative, resolve } from 'pathe';
 
 export const setupNuxtModule = (name: string, nuxt: Nuxt) => {
   const dirname = resolve(process.cwd(), 'src/modules', name);
@@ -36,6 +36,7 @@ export const setupNuxtModule = (name: string, nuxt: Nuxt) => {
   };
 
   nuxt.hook('builder:watch', (_event, path) => {
+    path = relative(nuxt.options.srcDir, resolve(nuxt.options.srcDir, path))
     if (path.startsWith('generated')) return;
     handleAutoImports();
   });

@@ -1,5 +1,5 @@
 import { addServerHandler, defineNuxtModule } from '@nuxt/kit';
-import { resolve } from 'pathe';
+import { relative, resolve } from 'pathe';
 import { setupNuxtModule } from '../../utils/nuxt-module';
 import { generateTrpcRouter } from './utils/generate-trpc-router';
 
@@ -14,6 +14,7 @@ export default defineNuxtModule({
 
     generateTrpcRouter();
     nuxt.hook('builder:watch', (_event, path) => {
+      path = relative(nuxt.options.srcDir, resolve(nuxt.options.srcDir, path))
       if (path.startsWith('generated')) return;
       generateTrpcRouter();
     });
